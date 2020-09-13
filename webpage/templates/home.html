@@ -11,17 +11,18 @@
 	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo">
 	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster+Two">
 	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orienta">
+
 	</head>
 
 	<body>
 		<div class="topborder">HOME MONITOR PAGE 1/?</div>
 		<div class="settingsbar">
 			<div class="settingstext" style="color: #FFFFFF">Settings</div>
-			<div class="buttonsettings" style="background-color: #338EC1"><li>Add Room</li></div>
-			<div class="buttonsettings" style="background-color: #338EC1"><li style="margin: 20px 0">Delete Room</li></div>
-			<div class="buttonsettings" style="background-color: #338EC1"><li style="margin: 20px 0">Clear Rooms</li></div>
-			<div class="buttonsettings" style="background-color: #338EC1"><li style="margin: 20px 0">Logout</li></div>
-			<div class="buttonsettings" style="background-color: #338EC1"><li style="margin: 20px 0">Reset</li></div>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Add Room" onclick="addButton()">Add Room</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Delete Room" onclick="removeButton()">Remove Room</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Simulate" onclick="simulateButton()">Simulate</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Logout" onclick="logoutButton()">Log Out</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Reset" onclick="resetButton()">Reset</button>
 		</div>
 		<table class="roomspace">
 			<tr>
@@ -48,7 +49,32 @@
 					</div>
 				</th>	
 			</tr>	
-		</div>			
-	</body>
+		</div>
 
+		 <script>
+			let rooms = 0;
+			if (rooms > 4) {
+				rooms = 4;
+			}
+			if (rooms < 0) {
+				rooms = 0;
+			} 
+
+			function addButton() {
+				alert("Will add a room");
+  			}
+  			function removeButton() {
+				alert("Will remove a room");
+  			}
+  			function simulateButton() {
+				alert("Will simulate what the app would look like with real data");
+  			}
+  			function logoutButton() {
+				alert("Will log out the user");
+  			}
+  			function resetButton() {
+				alert("Will reset to defaults (delete all rooms?)");
+  			}
+		</script>				
+	</body>
 </html>	

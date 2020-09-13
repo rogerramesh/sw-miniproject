@@ -127,7 +127,9 @@ a:active {
   list-style: none;
   text-align: center;
   background-color: #64A1C2;
-  line-height: 50px;
+  border-color: #64A1C2;
+  border-style: solid;
+  height: 7.5%;
   width: 100%;
   font-family: 'orienta'; 
   color: #FFFFFF;
@@ -167,6 +169,24 @@ a:active {
 .sideways {
   list-style: none;
   display: inline;
+}
+
+.passwordrequirements {
+  list-style: none;
+  font-size: 18px;
+  font-family: 'orienta';
+  text-align: center;
+  color: #0172A3;
+}
+
+.addroom {
+  display: none;
+  background-color: #BCE7FF;
+  left: 25%;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  padding-top: 60px;
 }
 
 /*Change text size based on window size*/
