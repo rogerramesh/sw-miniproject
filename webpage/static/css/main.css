@@ -1,0 +1,201 @@
+/*Luke Staib 2020*/
+/*Add and configure elements*/
+body {
+  background-color: #6DB8C2;
+}
+
+.topborder {
+  background: #0681A8;
+  height: 100px;
+  position: relative;
+  top: 30px;
+  left: 0%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+  font-family: 'orienta'; 
+  display: flex;
+}
+
+.loginspace {
+  background: #BCE7FF;
+  position: absolute;
+  height: 700px;
+  width: 500px;
+  top: 165px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.buttonlist {
+  list-style: none;
+  text-align: center;
+  background-color: #BCE7FF;
+  line-height: 80px;
+  width: 95%;
+  padding-left: 2.5%;
+  font-family: 'arimo'; 
+  font-size: 28px;
+  color: #FFFFFF;
+}
+
+.signin {
+  text-align: center;
+  margin-bottom: 10px;
+  line-height: 100px;
+  color: #2EB9CC;
+  font-family: 'Lobster Two';
+  font-size: 72px;
+}
+
+.userandpasswordentries {
+  list-style: none;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  line-height: 32px;
+  width: 98%;
+}
+
+.userandpassword {
+  list-style: none;
+  text-align: center;
+  line-height: 30px;
+  background-color: #FFFFFF;
+  border:2px; 
+  border-style:solid; 
+  border-color:#E5E5E5;
+  width: 70%;
+  margin-left: 15%;
+  margin-top: 10px;
+  font-family: 'arimo';
+  font-size: 24px;
+  color: #E5E5E5;
+}
+
+.signinbutton {
+  list-style: none;
+  text-align: center;
+  line-height: 70px;
+  background-color: #BCE7FF;
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 20px;
+  color: #FFFFFF;
+  font-family: 'arimo';
+  font-size: 48px;
+}
+
+.buttonlist:hover {color: #E5E5E5;}
+.login:hover {color: #E5E5E5;}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+.settingstext {
+  text-align: center;
+  margin-bottom: 100px;
+  line-height: 100px;
+  color: #2EB9CC;
+  font-family: 'Lobster Two';
+}
+
+.settingsbar {
+  background: #64A1C2;
+  position: absolute;
+  height: 700px;
+  width: 25%;
+  top: 158px;
+  left: 0.5%;
+}
+
+.buttonsettings {
+  list-style: none;
+  text-align: center;
+  background-color: #64A1C2;
+  line-height: 50px;
+  width: 100%;
+  font-family: 'orienta'; 
+  color: #FFFFFF;
+}
+
+.roomspace {
+  list-style: none;
+  height: 700px;
+  width: 65%;
+}
+
+.rooms {
+  list-style: none;
+  background-color: #BCE7FF;
+  height: 325px;
+  width: 90%;
+}
+
+.roomtitle {
+  position: relative;
+  font-size: 36px;
+  font-family: 'orienta';
+  text-align: center;
+  margin-top: 15px;
+  color: #006270;
+}
+
+.roomstats {
+  position: relative;
+  font-size: 24px;
+  font-family: 'orienta';
+  text-align: center;
+  margin-top: 15px;
+  color: #2EB9CC;
+}
+
+.sideways {
+  list-style: none;
+  display: inline;
+}
+
+/*Change text size based on window size*/
+@media screen and (max-width : 1350px) {
+  .topborder {
+      font-size: 7vw;
+  }
+  .settingstext {
+      font-size: 5vw;
+  }
+}
+
+@media screen and (min-width : 1351px) {
+  .topborder {
+      font-size: 92px;
+  }
+  .settingstext {
+      font-size: 64px;
+  }
+}
+
+@media screen and (max-width : 999px) {
+  .buttonsettings {
+      font-size: 3vw;
+  }    
+}
+
+@media screen and (min-width : 1000px) {
+  .buttonsettings {
+      font-size: 30px;
+  }    
+}

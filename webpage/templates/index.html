@@ -1,0 +1,41 @@
+<!-- Luke Staib 2020 -->
+<!-- Websites are placeholders, implement SSO and create failed and successful login paths -->
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+	  <meta charset="UTF-8">
+	  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <title>index.html</title>
+	  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster+Two">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orienta">
+	</head>
+
+	<body>
+		<div class="topborder">WELCOME TO HOME MONITOR</div>
+		<div class="loginspace">
+			<div class="signin">Sign In</div>
+			<div class="buttonlist">
+				<a href="https://google.com" style="color: #FFFFFF"><li style="background-color: #D83F36">Sign in with Google+</li></a>
+				<a href="https://facebook.com" style="color: #FFFFFF"><li style="background-color: #31538F">Sign in with Facebook</li></a>		
+			</div>
+			<div class="signin" style="margin-top: 5px">or</div>
+			<div class="userandpassword">
+				<input class="userandpasswordentries" placeholder="Username"></input>
+			</div>
+			<div class="userandpassword">
+				<input class="userandpasswordentries" type="password" placeholder="Password" font="small-caption" required></input>
+			</div>		
+			<div class="signinbutton">
+				<a href="/home" style="color: #FFFFFF"><li style="background-color: #00CF3A">Log In</li></a>
+			</div>
+			<div class="signinbutton">	
+				<a href="/signup" style="color: #FFFFFF"><li style="background-color: #0AFF98">Sign Up</li></a>
+			</div>		
+		</div>
+	</body>
+
+</html>	
