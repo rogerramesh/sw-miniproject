@@ -6,7 +6,7 @@
 	  <meta charset="UTF-8">
 	  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <title>home.html</title>
+	  <title>Home Monitor - Home</title>
 	  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo">
 	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster+Two">
@@ -15,59 +15,17 @@
 	</head>
 
 	<body>
-		<div class="topborder">HOME MONITOR PAGE 1/?</div>
-		<div class="settingsbar">
-			<div class="settingstext" style="color: #FFFFFF">Settings</div>
-			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Add Room" onclick="addButton()">Add Room</button>
-			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Delete Room" onclick="removeButton()">Remove Room</button>
-			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Simulate" onclick="simulateButton()">Simulate</button>
-			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Logout" onclick="logoutButton()">Log Out</button>
-			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Reset" onclick="resetButton()">Reset</button>
-		</div>
-		<table class="roomspace">
-			<tr>
-				<th>
-					<div class="rooms" style="margin-top: 50px; margin-left: 95%">
-						<div class="roomtitle"><li>{{R1}}</li></div>
-					</div>
-				</th>
-				<th>	
-					<div class="rooms" style="margin-top: 50px; margin-left: 95%">
-						<div class="roomtitle"><li>{{R2}}</li></div>
-					</div>
-				</th>	
-			</tr>
-			<tr>
-				<th>	
-					<div class="rooms" style="margin-top: 50px; margin-left: 95%">
-						<div class="roomtitle"><li>{{R3}}</li></div>
-					</div>
-				</th>
-				<th>	
-					<div class="rooms" style="margin-top: 50px; margin-left: 95%">
-						<div class="roomtitle"><li>{{R4}}</li></div>
-					</div>
-				</th>	
-			</tr>	
-		</div>
+		<script>
+			var myData = localStorage['objectToPass'];
+			localStorage.removeItem( 'objectToPass' ); // Clear the localStorage
+			var firstData = myData[0];
+			var secondData = myData[1];
 
-		 <script>
-			let rooms = 0;
-			if (rooms > 4) {
-				rooms = 4;
-			}
-			if (rooms < 0) {
-				rooms = 0;
-			} 
-
-			function addButton() {
-				alert("Will add a room");
+			function addsimulateButton() {
+				window.location='/form';
   			}
   			function removeButton() {
 				alert("Will remove a room");
-  			}
-  			function simulateButton() {
-				alert("Will simulate what the app would look like with real data");
   			}
   			function logoutButton() {
 				alert("Will log out the user");
@@ -75,6 +33,49 @@
   			function resetButton() {
 				alert("Will reset to defaults (delete all rooms?)");
   			}
-		</script>				
+  			/*
+  			function AddRoomData() {
+  				document.getElementById("form_data").submit();
+  			}
+  			function SimulateRoomData() {
+  				document.getElementById("form_data").submit();
+  			}
+  			*/
+		</script>
+
+		<div class="topborder">HOME MONITOR PAGE 1</div>
+		<div class="settingsbar">
+			<div class="settingstext" style="color: #FFFFFF">Settings</div>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Add Room" onclick="addsimulateButton()">Add/Simulate Room</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Delete Room" onclick="removeButton()">Remove Room</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Logout" onclick="logoutButton()">Log Out</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Reset" onclick="resetButton()">Reset</button>
+		</div>
+		<table class="roomspace">
+			<tr>
+				<th>
+					<div class="rooms" name="room1" style="margin-top: 50px; margin-left: 95%">
+						<div class="roomtitle"><li></li></div>
+					</div>
+				</th>
+				<th>	
+					<div class="rooms" name="room2" style="margin-top: 50px; margin-left: 95%">
+						<div class="roomtitle"><li></li></div>
+					</div>
+				</th>	
+			</tr>
+			<tr>
+				<th>	
+					<div class="rooms" name="room3" style="margin-top: 50px; margin-left: 95%">
+						<div class="roomtitle"><li></li></div>
+					</div>
+				</th>
+				<th>	
+					<div class="rooms" name="room4" style="margin-top: 50px; margin-left: 95%">
+						<div class="roomtitle"><li></li></div>
+					</div>
+				</th>	
+			</tr>	
+		</div>		
 	</body>
 </html>	
