@@ -179,14 +179,47 @@ a:active {
   color: #0172A3;
 }
 
-.addroom {
-  display: none;
+.formspace {
+  position: relative;
   background-color: #BCE7FF;
-  left: 25%;
-  top: 0;
-  width: 50%;
-  height: 50%;
-  padding-top: 60px;
+  left: 30%;
+  top: 40px;
+  width: 40%;
+  height: 60%;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.formentries {
+  list-style: none;
+  text-align: center;
+  background-color: #FFFFFF;
+  border: none;
+  line-height: 16px;
+  width: 20%;
+}
+
+.formlabels {
+  list-style: none;
+  text-align: center;
+  color: #006270;
+  font-size: 16px;
+  width: 30%;
+  font-family: 'orienta'; 
+}
+
+.formbutton {
+  list-style: none;
+  text-align: center;
+  background-color: #64A1C2;
+  border-color: #64A1C2;
+  border-style: solid;
+  height: 20%;
+  font-size: 24px;
+  width: 40%;
+  font-family: 'orienta'; 
+  color: #FFFFFF;
 }
 
 /*Change text size based on window size*/
