@@ -8,8 +8,8 @@ import random
 
 app = Flask(__name__)
 
-@app.route('/login/') # / default page
-def login():
+@app.route('/') # / default page
+def main():
 	return render_template("index.html")
 
 @app.route('/home/') # logged in
