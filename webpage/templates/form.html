@@ -1,52 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta  charset="UTF-8">
-        <title>Title</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Monitor - Add/Simulate</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster+Two">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orienta">
     </head>
-<body>
-    <form name="passdata" action="/submit" method="post">
-        <select id="mySelect" name = "rlist">
-            <option value="Room1">Room1</option>
-            <option value="Room2">Room2</option>
-            <option value="Room3">Room3</option>
-            <option value="Room4">Room4</option>
-          </select>
+    <body> 
+        <div class="topborder">ADD/SIMULATE ROOMS</div>
+        <div class="formspace">  
+            <form name="passdata" action="/submit" method="post"> 
+                <label class="formlabels">Room Name:</label><br>
+                <input class="formentries" type="text" name="Room"><br><br>
+                <select class="formlabels" id="mySelect" name="rlist">
+                    <option value="Room1">Room 1 (top-left)</option>
+                    <option value="Room2">Room 2 (top-right)</option>
+                    <option value="Room3">Room 3 (bottom-left)</option>
+                    <option value="Room4">Room 4 (bottom-right)</option>
+                </select><br><br>
+
+                <label class="formlabels">Temperatures are in Fahrenheit.</label><br>
+                <label class="formlabels">Temperature at 12AM:</label><br>
+                <input class="formentries" type="text" name="t1"><br><br>
+                <label class="formlabels">Temperature at 3AM:</label><br>
+                <input class="formentries" type="text" name="t2"><br><br>
+                <label class="formlabels">Temperature at 6AM:</label><br>
+                <input class="formentries" type="text" name="t3"><br><br>
+                <label class="formlabels">Temperature at 9AM</label><br>
+                <input class="formentries" type="text" name="t4"><br><br>
+                <label class="formlabels">Temperature at 12PM:</label><br>
+                <input class="formentries" type="text" name="t5"><br><br>
+                <label class="formlabels">Temperature at 3PM:</label><br>
+                <input class="formentries" type="text" name="t6"><br><br>
+                <label class="formlabels">Temperature at 6PM:</label><br>
+                <input class="formentries" type="text" name="t7"><br><br>
+                <label class="formlabels">Temperature at 9PM:</label><br>
+                <input class="formentries" type="text" name="t8"><br><br>
 
 
-<label>Temperature at 12AM:</label><br>
-<input type="text" name="t1"><br>
-<label>Temperature at 3AM</label><br>
-<input type="text" name="t2"><br>
-<label>Temperature at 6AM:</label><br>
-<input type="text" name="t3"><br>
-<label>Temperature at 9AM</label><br>
-<input type="text" name="t4"><br>
-<label>Temperature at 12PM:</label><br>
-<input type="text" name="t5"><br>
-<label>Temperature at 3PM</label><br>
-<input type="text" name="t6"><br>
-<label>Temperature at 6PM:</label><br>
-<input type="text" name="t7"><br>
-<label>Temperature at 9PM:</label><br>
-<input type="text" name="t8"><br>
+                <input class="formbutton" type="submit" name="submit" value="Add Room">
 
+            </form>
+            <br>
+            <form action="/simulate"> 
+                <input class="formbutton" type="submit" name="simulate" value="Simulate">
+            </form>
+        </div>    
 
+        <!---
+        <script>
+            function AddRoomData (form_data) {
+                var room_value = form_data.mySelect.value;
+                var room_num = 1;
+                var temp1 = form_data.t1.value;
+                var temp2 = form_data.t2.value;
+                var temp3 = form_data.t3.value;
+                var temp4 = form_data.t4.value;
+                var temp5 = form_data.t5.value;
+                var temp6 = form_data.t6.value;
+                var temp7 = form_data.t7.value;
+                var temp8 = form_data.t8.value;
 
-<input type="submit" value = "submit">
+                if (room_value == "Room 1 (top-left)") {
+                    room_num = 1;
+                }
+                else if (room_value == "Room 2 (top-right)") {
+                    room_num = 2;
+                }
+                else if (room_value == "Room 3 (bottom-left)") {
+                    room_num = 3;
+                }
+                else if (room_value == "Room 4 (bottom-right)") {
+                    room_num = 4;
+                }
+                else { //Should never happen...  default room to 1
+                    room_num = 1;
+                }
 
+                var temperatureData = [ room_num, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8 ];
+                localStorage.setItem('tempDataObj', temperatureData);
+            }
+            function SimulateRoomData(form_data) {
+                
+            }
+        </script>
+        -->
 
-</form>
-<br>
-<br>
-<form action="sim" method="post">
-    <input type="submit" name="simulate" value="simulate" />
-</form>
-
-
-
-</body>
+    </body>
 
 
 </html>
-
