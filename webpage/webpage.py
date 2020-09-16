@@ -8,22 +8,39 @@ import requests_oauthlib
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from statistics import mean
 
-#make this URL the AWS hosted one, and put URI on Facebook
+#update with AWS website!
 siteURL = "https://127.0.0.1:5000"
+
+#Facebook
 facebookAuthURL = "https://www.facebook.com/dialog/oauth"
 facebookTokenURL = "https://graph.facebook.com/oauth/access_token"
 
 facebookClientID = '335103650875723'
-facebookSecretID = '2292cf39c6921bff84289c91c711c493' #do NOT share, this compromises our web app
+facebookSecretID = '2292cf39c6921bff84289c91c711c493'
 facebookScope = ['email']
 
+#Google
+googleAuthURL = "https://accounts.google.com/o/oauth2/v2/auth"
+googleTokenURL = "https://www.googleapis.com/oauth2/v4/token"
+googleRefreshURL = googleTokenURL
+
+googleClientID = '175654411694-1kps1i1crfj0te22l0afsfadbd5unoqk.apps.googleusercontent.com'
+googleSecretID = 'IpzCigk8RYcFdjJwvy8RgufM'
+
+googleScope = [
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/userinfo.profile",
+]
+
+#Start app
 app = flask.Flask(__name__)
+app.secret_key = googleSecretID #google needs this...
 
 @app.route('/') # / - default page
 def main():
 	return flask.render_template("index.html")
 
-@app.route('/login-fb')
+@app.route('/login-fb') #login with fb
 def login():
     fb = requests_oauthlib.OAuth2Session(
         facebookClientID, redirect_uri=siteURL + "/callback-fb", scope=facebookScope
@@ -32,7 +49,7 @@ def login():
 
     return flask.redirect(authURL)
 
-@app.route("/callback-fb")
+@app.route("/callback-fb") #login routing with fb
 def callback():
     fb = requests_oauthlib.OAuth2Session(
         facebookClientID, scope=facebookScope, redirect_uri=siteURL + "/callback-fb"
@@ -55,11 +72,53 @@ def callback():
     email = fbUserData["email"]
     name = fbUserData["name"]
     pic = fbUserData.get("picture", {}).get("data", {}).get("url")
+
     return f"""
-	Logged in as: <br><br>
+	Logged into Facebook as: <br><br>
 	Email: {email} <br>
 	Name: {name} <br>
 	Profile Picture: <img src="{pic}"> <br><br>
+	Click the home button to proceed:
+	<a href="/home">Home</a>
+	"""
+
+@app.route('/login-google') #login with google
+def logingoogle():
+    google = requests_oauthlib.OAuth2Session(
+        googleClientID, redirect_uri=siteURL + "/callback-google", scope=googleScope
+    )
+    authURL, gState = google.authorization_url(googleAuthURL,
+		access_type="offline", prompt="select_account")
+
+    flask.session['oauth_state'] = gState
+    return flask.redirect(authURL)
+
+@app.route('/callback-google', methods=["GET"]) #login routing with google
+def callbackgoogle():
+	google = requests_oauthlib.OAuth2Session(
+		googleClientID, redirect_uri=siteURL + "/callback-google", state=flask.session['oauth_state']
+	)
+
+	tokenGoogle = google.fetch_token(googleTokenURL, client_secret=googleSecretID, authorization_response=flask.request.url)
+
+	flask.session['oauth_token'] = tokenGoogle
+	
+	google = requests_oauthlib.OAuth2Session(
+		googleClientID, token=flask.session['oauth_token']
+	)
+	googleUserData = google.get(
+		"https://www.googleapis.com/oauth2/v1/userinfo"
+	).json()
+
+	email = googleUserData["email"]
+	name = googleUserData["name"]
+
+	print(googleUserData)
+
+	return f"""
+	Logged into Google as: <br><br>
+	Email: {email} <br>
+	Name: {name} <br><br>
 	Click the home button to proceed:
 	<a href="/home">Home</a>
 	"""
