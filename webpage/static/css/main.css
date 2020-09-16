@@ -1,5 +1,4 @@
 /*Luke Staib 2020*/
-/*Add and configure elements*/
 body {
   background-color: #6DB8C2;
 }
@@ -21,9 +20,9 @@ body {
 .loginspace {
   background: #BCE7FF;
   position: absolute;
-  height: 700px;
+  height: 350px;
   width: 500px;
-  top: 165px;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, 0%);
 }
@@ -144,7 +143,7 @@ a:active {
 .rooms {
   list-style: none;
   background-color: #BCE7FF;
-  height: 325px;
+  height: 310px;
   width: 90%;
 }
 
