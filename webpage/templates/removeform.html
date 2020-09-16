@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
-  </head>
-  <body>
-  <form name = "removedata" action="" method="">
-    <label class="formlabels">Room Name:</label><br>
-    <input class="formentries" type="text" name="Room"><br><br>
-    <select class="formlabels" id="mySelect" name="rlist">
-        <option value="Room1">Room 1 (top-left)</option>
-        <option value="Room2">Room 2 (top-right)</option>
-        <option value="Room3">Room 3 (bottom-left)</option>
-        <option value="Room4">Room 4 (bottom-right)</option>
-    </select><br><br>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Monitor - Remove</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster+Two">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orienta">
+    </head>
+    <body>
+        <div class="topborder">REMOVE ROOMS</div>
+        <div class="formspace" style="margin-top: 100px">
+            <form name = "removedata" action="/home" method=""> <!--action="/submit-remove" method="post"-->
+                <label class = "formlabels">Select the room or multiple rooms to remove.</label><br><br>
 
-  </form>
+                <input type="checkbox" id="room1" name="room1" value="Room_1">
+                <label class = "formlabels" for="room1">Room 1 (top-left)</label><br>
+                <input type="checkbox" id="room2" name="room2" value="Room_2">
+                <label class = "formlabels" for="room2">Room 2 (top-right)</label><br>
+                <input type="checkbox" id="room3" name="room3" value="Room_3">
+                <label class = "formlabels" for="room3">Room 3 (bottom-left)</label><br>
+                <input type="checkbox" id="room4" name="room4" value="Room_4">
+                <label class = "formlabels" for="room4">Room 4 (bottom-right)</label><br><br>
 
-
-
-</body>
+                <input class="formbutton" type="submit" name="submit" value="Remove Room/s">
+            </form>
+        </div>    
+        <script>
+        </script>
+    </body>
 </html>
