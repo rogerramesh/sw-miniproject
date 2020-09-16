@@ -1,116 +1,84 @@
-from flask import Flask, render_template, request, redirect, url_for
-from flask_login import current_user, login_required, login_user, logout_user, LoginManager
-
-from database import init_db_command
-from userclass import User
-
-from oauthlib.oauth2 import WebApplicationClient
-
-import json
+import flask
 import os
-import sqlite3
 import plotly
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go 
 import random
-import requests
+import requests_oauthlib
+from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from statistics import mean
 
-GOOGLE_CLIENT_ID = "175654411694-1kps1i1crfj0te22l0afsfadbd5unoqk.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET = "IpzCigk8RYcFdjJwvy8RgufM"
-GOOGLE_DISCOVERY_URL = (
-    "https://accounts.google.com/.well-known/openid-configuration"
-)
+#make this URL the AWS hosted one, and put URI on Facebook
+siteURL = "https://127.0.0.1:5000"
+facebookAuthURL = "https://www.facebook.com/dialog/oauth"
+facebookTokenURL = "https://graph.facebook.com/oauth/access_token"
 
-app = Flask(__name__)
-app.secret_key = os.urandom(24) or os.environ.get("SECRET_KEY")
+facebookClientID = '335103650875723'
+facebookSecretID = '2292cf39c6921bff84289c91c711c493' #do NOT share, this compromises our web app
+facebookScope = ['email']
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-client = WebApplicationClient(GOOGLE_CLIENT_ID)
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id) #this app does not save any user's data, just log in every time...
-
-def get_google_provider_cfg():
-	return requests.get(GOOGLE_DISCOVERY_URL).json()    
+app = flask.Flask(__name__)
 
 @app.route('/') # / - default page
 def main():
-	return render_template("index.html")
+	return flask.render_template("index.html")
 
-@app.route('/login/') # / - hit sign in button and log in
+@app.route('/login-fb')
 def login():
-
-    g_provider_cfg = get_google_provider_cfg()
-    authorization_endpt = g_provider_cfg["authorization_endpoint"]
-    uri = client.prepare_request_uri(
-        authorization_endpt,
-        redirect_uri=request.base_url + "callback",
-        scope=["openid", "email", "profile"],
+    fb = requests_oauthlib.OAuth2Session(
+        facebookClientID, redirect_uri=siteURL + "/callback-fb", scope=facebookScope
     )
-    return redirect(uri)
+    authURL, _ = fb.authorization_url(facebookAuthURL)
 
-@app.route("/login/callback")
+    return flask.redirect(authURL)
+
+@app.route("/callback-fb")
 def callback():
-	code = request.args.get("code")
-	g_provider_cfg = get_google_provider_cfg()
-	t_endpt = g_provider_cfg["token_endpoint"] 
-	
-	t_url, headers, body = client.prepare_token_request(
-		t_endpt,
-		authorization_response=request.url,
-		redirect_url=request.base_url,
-		code=code
-	)
-	t_resp = requests.post(
-		t_url,
-		headers=headers,
-		data=body,
-		auth=(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET),
-	)
-	client.parse_request_body_response(json.dumps(t_resp.json()))
-	userinfo_endpt = g_provider_cfg["userinfo_endpoint"]
-	uri, headers, body = client.add_token(userinfo_endpt)
-	userinfo_resp = requests.get(uri, headers=headers, data=body) 
+    fb = requests_oauthlib.OAuth2Session(
+        facebookClientID, scope=facebookScope, redirect_uri=siteURL + "/callback-fb"
+    )
+    #compliance fix
+    fb = facebook_compliance_fix(fb)
 
-	if userinfo_resp.json().get("email_verified"):
-		unique_id = userinfo_resp.json()["sub"]
-		users_email = userinfo_resp.json()["email"]
-		picture = userinfo_resp.json()["picture"]
-		users_name = userinfo_resp.json()["given_name"]
-	else:
-		return "Email not verified by Google or not available.", 400 
+    fb.fetch_token(
+        facebookTokenURL,
+        client_secret=facebookSecretID,
+        authorization_response=flask.request.url,
+    )
 
-	user = User(
-   		id_=unique_id, profile_pic=picture, name=users_name, email=users_email
-	)
+    #get user data
+    fbUserData = fb.get(
+        "https://graph.facebook.com/me?fields=id,name,email,picture{url}"
+    ).json()
 
-	login_user(user)
-	if not User.get(unique_id):
-		User.create(unique_id, users_name, users_email, picture)
-
-	return redirect(url_for("home")) 
+    #show user they're logged in
+    email = fbUserData["email"]
+    name = fbUserData["name"]
+    pic = fbUserData.get("picture", {}).get("data", {}).get("url")
+    return f"""
+	Logged in as: <br><br>
+	Email: {email} <br>
+	Name: {name} <br>
+	Profile Picture: <img src="{pic}"> <br><br>
+	Click the home button to proceed:
+	<a href="/home">Home</a>
+	"""
 
 @app.route("/logout")
-@login_required
 def logout():
-    logout_user()
-    return redirect(url_for("index"))	   	
+    return flask.redirect("/")	   	
 
 @app.route('/home/') # / - logged in
 def home():
-    return render_template('home.html')
+    return flask.render_template('home.html')
 
-@app.route('/signup/') # / - sign up with a username/password
-def signup():
-	return render_template("signup.html")
-
-@app.route('/form/') # / - form for adding a room
+@app.route('/add-simulate/') # / - form for adding a room
 def form():
-	return render_template("form.html")	
+	return flask.render_template('form.html')
+
+@app.route('/remove/') # / - logged in
+def removeform():
+    return flask.render_template('removeform.html')		
 
 @app.route('/submit/',methods=['POST'])
 def getValue():
@@ -137,13 +105,13 @@ def getValue():
 	Room_sel = request.form.get("rlist", None)
 	if Room_sel != None:
 		if Room_sel == "Room1":
-			return render_template("home.html",R1=Room_sel)
+			return flask.render_template("home.html",R1=Room_sel)
 		elif Room_sel == "Room2":
-			return render_template("home.html",R2=Room_sel)
+			return flask.render_template("home.html",R2=Room_sel)
 		elif Room_sel == "Room3":
-			return render_template("home.html",R3=Room_sel)
+			return flask.render_template("home.html",R3=Room_sel)
 		else:
-			return render_template("home.html",R4=Room_sel)
+			return flask.render_template("home.html",R4=Room_sel)
 
 	"""
 	fig2.add_trace(go.Scatter(x=timeX,y=tempY,mode='markers'))
@@ -197,7 +165,7 @@ def simulate():
 	fig.update_layout(title_text="Simulated Room Data", title_x=0.5)
 	fig.show()
 
-	return render_template("home.html")					
+	return flask.render_template("home.html")					
 
 if __name__ == "__main__":
 	app.run(ssl_context="adhoc", debug="True") 
