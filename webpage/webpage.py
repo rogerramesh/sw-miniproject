@@ -1,30 +1,118 @@
-from flask import Flask
-from flask import render_template, request, redirect
-from statistics import mean
+from flask import Flask, render_template, request, redirect, url_for
+from flask_login import current_user, login_required, login_user, logout_user, LoginManager
+
+from database import init_db_command
+from userclass import User
+
+from oauthlib.oauth2 import WebApplicationClient
+
+import json
+import os
+import sqlite3
 import plotly
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go 
 import random
+import requests
+from statistics import mean
+
+GOOGLE_CLIENT_ID = "175654411694-1kps1i1crfj0te22l0afsfadbd5unoqk.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "IpzCigk8RYcFdjJwvy8RgufM"
+GOOGLE_DISCOVERY_URL = (
+    "https://accounts.google.com/.well-known/openid-configuration"
+)
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24) or os.environ.get("SECRET_KEY")
 
-@app.route('/') # / default page
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+client = WebApplicationClient(GOOGLE_CLIENT_ID)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id) #this app does not save any user's data, just log in every time...
+
+def get_google_provider_cfg():
+	return requests.get(GOOGLE_DISCOVERY_URL).json()    
+
+@app.route('/') # / - default page
 def main():
 	return render_template("index.html")
 
-@app.route('/home/') # logged in
+@app.route('/login/') # / - hit sign in button and log in
+def login():
+
+    g_provider_cfg = get_google_provider_cfg()
+    authorization_endpt = g_provider_cfg["authorization_endpoint"]
+    uri = client.prepare_request_uri(
+        authorization_endpt,
+        redirect_uri=request.base_url + "callback",
+        scope=["openid", "email", "profile"],
+    )
+    return redirect(uri)
+
+@app.route("/login/callback")
+def callback():
+	code = request.args.get("code")
+	g_provider_cfg = get_google_provider_cfg()
+	t_endpt = g_provider_cfg["token_endpoint"] 
+	
+	t_url, headers, body = client.prepare_token_request(
+		t_endpt,
+		authorization_response=request.url,
+		redirect_url=request.base_url,
+		code=code
+	)
+	t_resp = requests.post(
+		t_url,
+		headers=headers,
+		data=body,
+		auth=(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET),
+	)
+	client.parse_request_body_response(json.dumps(t_resp.json()))
+	userinfo_endpt = g_provider_cfg["userinfo_endpoint"]
+	uri, headers, body = client.add_token(userinfo_endpt)
+	userinfo_resp = requests.get(uri, headers=headers, data=body) 
+
+	if userinfo_resp.json().get("email_verified"):
+		unique_id = userinfo_resp.json()["sub"]
+		users_email = userinfo_resp.json()["email"]
+		picture = userinfo_resp.json()["picture"]
+		users_name = userinfo_resp.json()["given_name"]
+	else:
+		return "Email not verified by Google or not available.", 400 
+
+	user = User(
+   		id_=unique_id, profile_pic=picture, name=users_name, email=users_email
+	)
+
+	login_user(user)
+	if not User.get(unique_id):
+		User.create(unique_id, users_name, users_email, picture)
+
+	return redirect(url_for("home")) 
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("index"))	   	
+
+@app.route('/home/') # / - logged in
 def home():
     return render_template('home.html')
 
-@app.route('/signup/') # sign up with a username/password? will probably remove this
+@app.route('/signup/') # / - sign up with a username/password
 def signup():
 	return render_template("signup.html")
 
-@app.route('/form/') # / form for adding a room
+@app.route('/form/') # / - form for adding a room
 def form():
 	return render_template("form.html")	
 
-@app.route('/submit/',methods=['POST']) # / room adding route
+@app.route('/submit/',methods=['POST'])
 def getValue():
 	Room = request.form['Room']
 	t1 = request.form['t1']
@@ -68,7 +156,7 @@ def getValue():
 		
 	"""			
 
-@app.route('/simulate/') # / simulation route
+@app.route('/simulate/')
 def simulate():
 	random.seed(a=None, version=2)
 	timeX = ['12am','3am','6am','9am','12pm','3pm','6pm','9pm']
@@ -112,4 +200,4 @@ def simulate():
 	return render_template("home.html")					
 
 if __name__ == "__main__":
-	app.run() 
+	app.run(ssl_context="adhoc", debug="True") 
