@@ -35,6 +35,7 @@
 						<p class="roomstats" id="room1t6"></p>
 						<p class="roomstats" id="room1t7"></p>
 						<p class="roomstats" id="room1t8"></p>
+						<p class="roomstats" id="room1h"></p>
 					</div>	
 				</th>
 				<th>	
@@ -48,6 +49,7 @@
 						<p class="roomstats" id="room2t6"></p>
 						<p class="roomstats" id="room2t7"></p>
 						<p class="roomstats" id="room2t8"></p>
+						<p class="roomstats" id="room2h"></p>
 					</div>
 				</th>	
 			</tr>
@@ -63,6 +65,7 @@
 						<p class="roomstats" id="room3t6"></p>
 						<p class="roomstats" id="room3t7"></p>
 						<p class="roomstats" id="room3t8"></p>
+						<p class="roomstats" id="room3h"></p>
 					</div>
 				</th>
 				<th>	
@@ -76,6 +79,7 @@
 						<p class="roomstats" id="room4t6"></p>
 						<p class="roomstats" id="room4t7"></p>
 						<p class="roomstats" id="room4t8"></p>
+						<p class="roomstats" id="room4h"></p>
 					</div>
 				</th>	
 			</tr>	
@@ -130,6 +134,10 @@
 	            	if (name == "Room1T8" || name == " Room1T8") {
 	            		document.getElementById('room1t8').innerHTML = "Temperature at 9PM: " + value;
 	            	}
+	            	if (name == "Room1H" || name == " Room1H") {
+	            		document.getElementById('room1h').innerHTML = "Humidity: " + value + "%";
+	            	}
+
 
 	            	if (name == "Room2RName" || name == " Room2RName") {
 	            		if (!(value == "")) {
@@ -163,6 +171,9 @@
 	            	}
 	            	if (name == "Room2T8" || name == " Room2T8") {
 	            		document.getElementById('room2t8').innerHTML = "Temperature at 9PM: " + value;
+	            	}
+	            	if (name == "Room2H" || name == " Room2H") {
+	            		document.getElementById('room2h').innerHTML = "Humidity: " + value + "%";
 	            	}
 
 	            	if (name == "Room3RName" || name == " Room3RName") {
@@ -198,6 +209,9 @@
 	            	if (name == "Room3T8" || name == " Room3T8") {
 	            		document.getElementById('room3t8').innerHTML = "Temperature at 9PM: " + value;
 	            	}
+	            	if (name == "Room3H" || name == " Room3H") {
+	            		document.getElementById('room3h').innerHTML = "Humidity: " + value + "%";
+	            	}
 
 	            	if (name == "Room4RName" || name == " Room4RName") {
 	            		if (value != "") {
@@ -232,7 +246,10 @@
 	            	if (name == "Room4T8" || name == " Room4T8") {
 	            		document.getElementById('room4t8').innerHTML = "Temperature at 9PM: " + value;
 	            	}
-	            	//console.log("Key is : " + name + " and Value is : " + value); //showing cookies to the page for debug
+	            	if (name == "Room4H" || name == " Room4H") {
+	            		document.getElementById('room4h').innerHTML = "Humidity: " + value + "%";
+	            	}
+	            	console.log("Key is : " + name + " and Value is : " + value); //showing cookies to the page for debug
 	        	}
             }
 		</script>
