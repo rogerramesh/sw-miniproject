@@ -1,4 +1,5 @@
 /*Luke Staib 2020*/
+/*Add and configure elements*/
 body {
   background-color: #6DB8C2;
 }
@@ -143,25 +144,22 @@ a:active {
 .rooms {
   list-style: none;
   background-color: #BCE7FF;
-  height: 310px;
-  width: 90%;
+  height: 315px;
+  width: 330px;
 }
 
 .roomtitle {
-  position: relative;
-  font-size: 36px;
   font-family: 'orienta';
+  font-size: 32px;
   text-align: center;
-  margin-top: 15px;
   color: #006270;
 }
 
 .roomstats {
-  position: relative;
-  font-size: 24px;
+  font-size: 18px;
   font-family: 'orienta';
-  text-align: center;
-  margin-top: 15px;
+  text-align: left;
+  margin-left: 10px;
   color: #2EB9CC;
 }
 
@@ -221,6 +219,14 @@ a:active {
   color: #FFFFFF;
 }
 
+p {
+    display: block;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
 /*Change text size based on window size*/
 @media screen and (max-width : 1350px) {
   .topborder {
@@ -242,12 +248,12 @@ a:active {
 
 @media screen and (max-width : 999px) {
   .buttonsettings {
-      font-size: 3vw;
-  }    
+      font-size: 2vw;
+  } 
 }
 
 @media screen and (min-width : 1000px) {
   .buttonsettings {
-      font-size: 30px;
+      font-size: 22px;
   }    
 }
