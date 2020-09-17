@@ -165,7 +165,7 @@ def getValue():
 	fig.update_xaxes(title_text="Time of Day")
 	fig.update_yaxes(title_text="Temperature in Fahrenheit")
 	fig.update_layout(title_text="%s" % (Room), title_x=0.5)
-	#fig.show()
+	fig.show()
 
 	return flask.redirect("/home")
 
