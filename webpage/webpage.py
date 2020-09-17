@@ -10,8 +10,7 @@ from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from statistics import mean
 import time #testing
 
-#siteURL = "https://homemonitor.tech"
-siteURL = "https://www.127.0.0.1:5000"
+siteURL = "https://homemonitor.tech"
 
 #Facebook
 facebookAuthURL = "https://www.facebook.com/dialog/oauth"
