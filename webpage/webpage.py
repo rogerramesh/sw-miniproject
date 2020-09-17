@@ -1,226 +1,260 @@
-import flask
-from flask import request
-import os
-import plotly
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go 
-import random
-import requests_oauthlib
-from requests_oauthlib.compliance_fixes import facebook_compliance_fix
-from statistics import mean
+<!-- Luke Staib 2020 -->
+<!DOCTYPE html>
+<html lang="en">
 
-siteURL = "https://52.205.164.138:443"
+	<head>
+	  <meta charset="UTF-8">
+	  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <title>Home Monitor - Home</title>
+	  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster+Two">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orienta">
+	</head>
 
-#Facebook
-facebookAuthURL = "https://www.facebook.com/dialog/oauth"
-facebookTokenURL = "https://graph.facebook.com/oauth/access_token"
+	<body>
+		<div class="topborder">HOME MONITOR</div>
+		<div class="settingsbar">
+			<div class="settingstext" style="color: #FFFFFF">Settings</div>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Add Room" onclick="addsimulateButton()">Add/Simulate Rooms</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Delete Room" onclick="removeButton()">Remove/Reset Rooms</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Logout" onclick="logoutButton()">Log Out</button>
+		</div>
 
-facebookClientID = '335103650875723'
-facebookSecretID = '2292cf39c6921bff84289c91c711c493'
-facebookScope = ['email']
-
-#Google
-googleAuthURL = "https://accounts.google.com/o/oauth2/v2/auth"
-googleTokenURL = "https://www.googleapis.com/oauth2/v4/token"
-googleRefreshURL = googleTokenURL
-
-googleClientID = '175654411694-1kps1i1crfj0te22l0afsfadbd5unoqk.apps.googleusercontent.com'
-googleSecretID = 'IpzCigk8RYcFdjJwvy8RgufM'
-
-googleScope = [
-    "https://www.googleapis.com/auth/userinfo.email",
-    "https://www.googleapis.com/auth/userinfo.profile",
-]
-
-#Start app
-app = flask.Flask(__name__)
-app.secret_key = googleSecretID #google needs this...
-
-@app.route('/') # / - default page
-def main():
-	return flask.render_template("index.html")
-
-@app.route('/login-fb') #login with fb
-def login():
-	fb = requests_oauthlib.OAuth2Session(
-		facebookClientID, redirect_uri=siteURL + "/callback-fb", scope=facebookScope
-	)
-
-	authURL, _ = fb.authorization_url(facebookAuthURL)
-
-	print(authURL)
-	return flask.redirect(authURL)
-
-@app.route("/callback-fb") #login routing with fb
-def callback():
-	fb = requests_oauthlib.OAuth2Session(
-        facebookClientID, scope=facebookScope, redirect_uri=siteURL + "/callback-fb"
-	)
-
-    #compliance fix
-	fb = facebook_compliance_fix(fb)
-
-	fb.fetch_token(
-        facebookTokenURL,
-        client_secret=facebookSecretID,
-        authorization_response=flask.request.url,
-    )
-
-    #get user data
-	fbUserData = fb.get(
-        "https://graph.facebook.com/me?fields=id,name,email,picture{url}"
-    ).json()
-
-    #show user they're logged in
-	email = fbUserData["email"]
-	name = fbUserData["name"]
-	pic = fbUserData.get("picture", {}).get("data", {}).get("url")
-
-	return f"""
-	Logged into Facebook as: <br><br>
-	Email: {email} <br>
-	Name: {name} <br>
-	Profile Picture: <img src="{pic}"> <br><br>
-	Click the home button to proceed:
-	<a href="/home">Home</a>
-	"""
-
-@app.route('/login-google') #login with google
-def logingoogle():
-    google = requests_oauthlib.OAuth2Session(
-        googleClientID, redirect_uri=siteURL + "/callback-google", scope=googleScope
-    )
-    authURL, gState = google.authorization_url(googleAuthURL,
-		access_type="offline", prompt="select_account")
-
-    flask.session['oauth_state'] = gState
-    return flask.redirect(authURL)
-
-@app.route('/callback-google') #login routing with google
-def callbackgoogle():
-	google = requests_oauthlib.OAuth2Session(
-		googleClientID, redirect_uri=siteURL + "/callback-google", state=flask.session['oauth_state']
-	)
-
-	tokenGoogle = google.fetch_token(googleTokenURL, client_secret=googleSecretID, authorization_response=flask.request.url)
-
-	flask.session['oauth_token'] = tokenGoogle
-	
-	google = requests_oauthlib.OAuth2Session(
-		googleClientID, token=flask.session['oauth_token']
-	)
-	googleUserData = google.get(
-		"https://www.googleapis.com/oauth2/v1/userinfo"
-	).json()
-
-	email = googleUserData["email"]
-	name = googleUserData["name"]
-
-	return f"""
-	Logged into Google as: <br><br>
-	Email: {email} <br>
-	Name: {name} <br><br>
-	Click the home button to proceed:
-	<a href="/home">Home</a>
-	"""
-
-@app.route("/logout")
-def logout():
-    return flask.redirect("/")	   	
-
-@app.route('/home') # / - logged in
-def home():
-    return flask.render_template('home.html')
-
-@app.route('/add-simulate') # / - form for adding a room
-def form():
-	return flask.render_template('form.html')
-
-@app.route('/remove') # / - logged in
-def removeform():
-    return flask.render_template('removeform.html')		
-
-@app.route('/submit',methods=['POST'])
-def getValue():
-	Room = request.form['Room']
-	t1 = request.form['t1']
-	t2 = request.form['t2']
-	t3 = request.form['t3']
-	t4 = request.form['t4']
-	t5 = request.form['t5']
-	t6 = request.form['t6']
-	t7 = request.form['t7']
-	t8 = request.form['t8']
-	res=[t1,t2,t3,t4,t5,t6,t7,t8]
-	tempY = [int(i) for i in res]
-	avg = mean(tempY)
-	avg = round(avg,1)
-	timeX = ['12am','3am','6am','9am','12pm','3pm','6pm','9pm']
-	fig = go.Figure()
-	fig.add_trace(go.Scatter(x=timeX,y=tempY,mode='markers'))
-	fig.update_xaxes(title_text="Time of Day")
-	fig.update_yaxes(title_text="Temperature in Fahrenheit")
-	fig.update_layout(title_text="%s" % (Room), title_x=0.5)
-	#fig.show()
-
-	return flask.redirect("/home")
-
-	"""
-	fig2.add_trace(go.Scatter(x=timeX,y=tempY,mode='markers'))
-	
-	fig2.update_xaxes(title_text="time")
-	fig2.update_yaxes(title_text="humidity")
-	cel = [(i-32)/(1.8) for i in tempY]	
-	fig2.add_trace(go.Scatter(x=timeX,y=tempY,mode='markers'))
-	fig.show()
-		
-	"""			
-@app.route('/submit-remove',methods=['POST'])
-def remove_redirect():
-	return flask.redirect("/home")
-
-@app.route('/simulate')
-def simulate():
-	random.seed(a=None, version=2)
-	timeX = ['12am','3am','6am','9am','12pm','3pm','6pm','9pm']
-	fig = make_subplots(rows=2, cols=2)
-	colnum = 1
-	rownum = 1
-
-	for i in range(4):
-		t1 = random.random() * 100
-		t2 = random.random() * 100
-		t3 = random.random() * 100
-		t4 = random.random() * 100
-		t5 = random.random() * 100
-		t6 = random.random() * 100
-		t7 = random.random() * 100
-		t8 = random.random() * 100
-		res=[t1,t2,t3,t4,t5,t6,t7,t8]
-		tempY = [int(j) for j in res]
-		avg = mean(tempY)
-		avg = round(avg,1)
-		if (i == 0):
-			rownum = 1
-			colnum = 1
-		if (i == 1):
-			rownum = 1
-			colnum = 2
-		if (i == 2):
-			rownum = 2
-			colnum = 1
-		if (i == 3):
-			rownum = 2
-			colnum = 2			
-		fig.add_trace(go.Scatter(x=timeX,y=tempY,mode='markers'),row=rownum,col=colnum)
+		<table class="roomspace">
+			<tr>
+				<th>
+					<div class="rooms" name="room1" style="margin-top: 50px; margin-left: 95%">
+						<p class="roomtitle" id="room1name"></p>
+						<p class="roomstats" id="room1t1"></p>
+						<p class="roomstats" id="room1t2"></p>
+						<p class="roomstats" id="room1t3"></p>
+						<p class="roomstats" id="room1t4"></p>
+						<p class="roomstats" id="room1t5"></p>
+						<p class="roomstats" id="room1t6"></p>
+						<p class="roomstats" id="room1t7"></p>
+						<p class="roomstats" id="room1t8"></p>
+						<p class="roomstats" id="room1h"></p>
+					</div>	
+				</th>
+				<th>	
+					<div class="rooms" name="room2" style="margin-top: 50px; margin-left: 95%">
+						<p class="roomtitle" id="room2name"></p>
+						<p class="roomstats" id="room2t1"></p>
+						<p class="roomstats" id="room2t2"></p>
+						<p class="roomstats" id="room2t3"></p>
+						<p class="roomstats" id="room2t4"></p>
+						<p class="roomstats" id="room2t5"></p>
+						<p class="roomstats" id="room2t6"></p>
+						<p class="roomstats" id="room2t7"></p>
+						<p class="roomstats" id="room2t8"></p>
+						<p class="roomstats" id="room2h"></p>
+					</div>
+				</th>	
+			</tr>
+			<tr>
+				<th>	
+					<div class="rooms" name="room3" style="margin-top: 50px; margin-left: 95%">
+						<p class="roomtitle" id="room3name"></p>
+						<p class="roomstats" id="room3t1"></p>
+						<p class="roomstats" id="room3t2"></p>
+						<p class="roomstats" id="room3t3"></p>
+						<p class="roomstats" id="room3t4"></p>
+						<p class="roomstats" id="room3t5"></p>
+						<p class="roomstats" id="room3t6"></p>
+						<p class="roomstats" id="room3t7"></p>
+						<p class="roomstats" id="room3t8"></p>
+						<p class="roomstats" id="room3h"></p>
+					</div>
+				</th>
+				<th>	
+					<div class="rooms" name="room4" style="margin-top: 50px; margin-left: 95%">
+						<p class="roomtitle" id="room4name"></p>
+						<p class="roomstats" id="room4t1"></p>
+						<p class="roomstats" id="room4t2"></p>
+						<p class="roomstats" id="room4t3"></p>
+						<p class="roomstats" id="room4t4"></p>
+						<p class="roomstats" id="room4t5"></p>
+						<p class="roomstats" id="room4t6"></p>
+						<p class="roomstats" id="room4t7"></p>
+						<p class="roomstats" id="room4t8"></p>
+						<p class="roomstats" id="room4h"></p>
+					</div>
+				</th>	
+			</tr>	
+		</div>
+		<script type = "text/javascript"> //Load html and then script
+			function addsimulateButton() {
+				window.location='/add-simulate';
+  			}
+  			function removeButton() {
+				window.location='/remove';
+  			}
+  			function logoutButton() {
+				window.location='/logout';
+  			}
+            function LoadCookies() {
+            	var cookies = document.cookie;   
+            	cookies = cookies.split(';');
+               
+	        	for(var i = 0; i < cookies.length; i++) {
+	            	name = cookies[i].split('=')[0];
+	            	value = cookies[i].split('=')[1];
+	            	if (name == "Room1RName" || name == " Room1RName") {
+	            		if (value != "") {
+	            			value = value.replace(/%20/g, " ");
+	            			document.getElementById('room1name').innerHTML = value;
+	            		}
+	            		else {
+	            			document.getElementById('room1name').innerHTML = "Room 1";
+	            		}
+	            	}
+	            	if (name == "Room1T1" || name == " Room1T1") {
+	            		document.getElementById('room1t1').innerHTML = "Temperature at 12AM: " + value;
+	            	}
+	            	if (name == "Room1T2" || name == " Room1T2") {
+	            		document.getElementById('room1t2').innerHTML = "Temperature at 3AM: " + value;
+	            	}
+	            	if (name == "Room1T3" || name == " Room1T3") {
+	            		document.getElementById('room1t3').innerHTML = "Temperature at 6AM: " + value;
+	            	}
+	            	if (name == "Room1T4" || name == " Room1T4") {
+	            		document.getElementById('room1t4').innerHTML = "Temperature at 9AM: " + value;
+	            	}
+	            	if (name == "Room1T5" || name == " Room1T5") {
+	            		document.getElementById('room1t5').innerHTML = "Temperature at 12PM: " + value;
+	            	}
+	            	if (name == "Room1T6" || name == " Room1T6") {
+	            		document.getElementById('room1t6').innerHTML = "Temperature at 3PM: " + value;
+	            	}
+	            	if (name == "Room1T7" || name == " Room1T7") {
+	            		document.getElementById('room1t7').innerHTML = "Temperature at 6PM: " + value;
+	            	}
+	            	if (name == "Room1T8" || name == " Room1T8") {
+	            		document.getElementById('room1t8').innerHTML = "Temperature at 9PM: " + value;
+	            	}
+	            	if (name == "Room1H" || name == " Room1H") {
+	            		document.getElementById('room1h').innerHTML = "Humidity: " + value + "%";
+	            	}
 
 
-	fig.update_xaxes(title_text="Time of Day")
-	fig.update_yaxes(title_text="Temperature in Fahrenheit")
-	fig.update_layout(title_text="Simulated Room Data", title_x=0.5)
-	fig.show()
+	            	if (name == "Room2RName" || name == " Room2RName") {
+	            		if (!(value == "")) {
+	            			value = value.replace(/%20/g, " ");
+	            			document.getElementById('room2name').innerHTML = value;
+	            		}
+	            		else {
+	            			document.getElementById('room2name').innerHTML = "Room 2";
+	            		}
+	            	}
+	            	if (name == "Room2T1" || name == " Room2T1") {
+	            		document.getElementById('room2t1').innerHTML = "Temperature at 12AM: " + value;
+	            	}
+	            	if (name == "Room2T2" || name == " Room2T2") {
+	            		document.getElementById('room2t2').innerHTML = "Temperature at 3AM: " + value;
+	            	}
+	            	if (name == "Room2T3" || name == " Room2T3") {
+	            		document.getElementById('room2t3').innerHTML = "Temperature at 6AM: " + value;
+	            	}
+	            	if (name == "Room2T4" || name == " Room2T4") {
+	            		document.getElementById('room2t4').innerHTML = "Temperature at 9AM: " + value;
+	            	}
+	            	if (name == "Room2T5" || name == " Room2T5") {
+	            		document.getElementById('room2t5').innerHTML = "Temperature at 12PM: " + value;
+	            	}
+	            	if (name == "Room2T6" || name == " Room2T6") {
+	            		document.getElementById('room2t6').innerHTML = "Temperature at 3PM: " + value;
+	            	}
+	            	if (name == "Room2T7" || name == " Room2T7") {
+	            		document.getElementById('room2t7').innerHTML = "Temperature at 6PM: " + value;
+	            	}
+	            	if (name == "Room2T8" || name == " Room2T8") {
+	            		document.getElementById('room2t8').innerHTML = "Temperature at 9PM: " + value;
+	            	}
+	            	if (name == "Room2H" || name == " Room2H") {
+	            		document.getElementById('room2h').innerHTML = "Humidity: " + value + "%";
+	            	}
 
-	return flask.render_template("home.html")					
+	            	if (name == "Room3RName" || name == " Room3RName") {
+	            		if (value != "") {
+	            			value = value.replace(/%20/g, " ");
+	            			document.getElementById('room3name').innerHTML = value;
+	            		}
+	            		else {
+	            			document.getElementById('room3name').innerHTML = "Room 3";
+	            		}
+	            	}
+	            	if (name == "Room3T1" || name == " Room3T1") {
+	            		document.getElementById('room3t1').innerHTML = "Temperature at 12AM: " + value;
+	            	}
+	            	if (name == "Room3T2" || name == " Room3T2") {
+	            		document.getElementById('room3t2').innerHTML = "Temperature at 3AM: " + value;
+	            	}
+	            	if (name == "Room3T3" || name == " Room3T3") {
+	            		document.getElementById('room3t3').innerHTML = "Temperature at 6AM: " + value;
+	            	}
+	            	if (name == "Room3T4" || name == " Room3T4") {
+	            		document.getElementById('room3t4').innerHTML = "Temperature at 9AM: " + value;
+	            	}
+	            	if (name == "Room3T5" || name == " Room3T5") {
+	            		document.getElementById('room3t5').innerHTML = "Temperature at 12PM: " + value;
+	            	}
+	            	if (name == "Room3T6" || name == " Room3T6") {
+	            		document.getElementById('room3t6').innerHTML = "Temperature at 3PM: " + value;
+	            	}
+	            	if (name == "Room3T7" || name == " Room3T7") {
+	            		document.getElementById('room3t7').innerHTML = "Temperature at 6PM: " + value;
+	            	}
+	            	if (name == "Room3T8" || name == " Room3T8") {
+	            		document.getElementById('room3t8').innerHTML = "Temperature at 9PM: " + value;
+	            	}
+	            	if (name == "Room3H" || name == " Room3H") {
+	            		document.getElementById('room3h').innerHTML = "Humidity: " + value + "%";
+	            	}
 
-if __name__ == "__main__":
-	app.run(ssl_context="adhoc", debug="True") 
+	            	if (name == "Room4RName" || name == " Room4RName") {
+	            		if (value != "") {
+	            			value = value.replace(/%20/g, " ");
+	            			document.getElementById('room4name').innerHTML = value;
+	            		}
+	            		else {
+	            			document.getElementById('room4name').innerHTML = "Room 4";
+	            		}
+	            	}
+	            	if (name == "Room4T1" || name == " Room4T1") {
+	            		document.getElementById('room4t1').innerHTML = "Temperature at 12AM: " + value;
+	            	}
+	            	if (name == "Room4T2" || name == " Room4T2") {
+	            		document.getElementById('room4t2').innerHTML = "Temperature at 3AM: " + value;
+	            	}
+	            	if (name == "Room4T3" || name == " Room4T3") {
+	            		document.getElementById('room4t3').innerHTML = "Temperature at 6AM: " + value;
+	            	}
+	            	if (name == "Room4T4" || name == " Room4T4") {
+	            		document.getElementById('room4t4').innerHTML = "Temperature at 9AM: " + value;
+	            	}
+	            	if (name == "Room4T5" || name == " Room4T5") {
+	            		document.getElementById('room4t5').innerHTML = "Temperature at 12PM: " + value;
+	            	}
+	            	if (name == "Room4T6" || name == " Room4T6") {
+	            		document.getElementById('room4t6').innerHTML = "Temperature at 3PM: " + value;
+	            	}
+	            	if (name == "Room4T7" || name == " Room4T7") {
+	            		document.getElementById('room4t7').innerHTML = "Temperature at 6PM: " + value;
+	            	}
+	            	if (name == "Room4T8" || name == " Room4T8") {
+	            		document.getElementById('room4t8').innerHTML = "Temperature at 9PM: " + value;
+	            	}
+	            	if (name == "Room4H" || name == " Room4H") {
+	            		document.getElementById('room4h').innerHTML = "Humidity: " + value + "%";
+	            	}
+	            	console.log("Key is : " + name + " and Value is : " + value); //showing cookies to the page for debug
+	        	}
+            }
+		</script>
+		<script type = "text/javascript">
+			LoadCookies();
+		</script>		
+	</body>
+</html>	
