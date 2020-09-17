@@ -9,12 +9,80 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster+Two">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orienta">
+
+        <script type = "text/javascript">
+            function SaveCookies() {
+                if (document.passdata.rlist == "") {
+                    alert("Please fill out the form to add a room.");
+                    return;
+                }
+                if (document.passdata.RName == "") {
+                    alert("Please fill out the form to add a room.");
+                    return;
+                }
+                if (document.passdata.t1 == "") {
+                    alert("Please fill out the form to add a room.");
+                    return;
+                }
+                if (document.passdata.t2 == "") {
+                    alert("Please fill out the form to add a room.");
+                    return;
+                }
+                if (document.passdata.t3 == "") {
+                    alert("Please fill out the form to add a room.");
+                    return;
+                }
+                if (document.passdata.t4 == "") {
+                    alert("Please fill out the form to add a room.");
+                    return;
+                }
+                if (document.passdata.t5 == "") {
+                    alert("Please fill out the form to add a room.");
+                    return;
+                }
+                if (document.passdata.t6 == "") {
+                    alert("Please fill out the form to add a room.");
+                    return;
+                }
+                if (document.passdata.t7 == "") {
+                    alert("Please fill out the form to add a room.");
+                    return;
+                }
+                var expires = '',
+                date = new Date();
+                date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000)); //saves the cookie for a year
+                expires = '; expires=' + date.toGMTString();
+
+                if (document.passdata.rlist.value == "Room1") {
+                    Room1cookieT1 = escape(document.passdata.t1.value) + ";";
+                    document.cookie = "Room1T1=" + Room1cookieT1 + expires + '; path=/';
+
+                    Room1cookieT2 = escape(document.passdata.t2.value) + ";";
+                    document.cookie = "Room1T2=" + Room1cookieT2 + expires + '; path=/';
+
+                    Room1cookieT3 = escape(document.passdata.t3.value) + ";";
+                    document.cookie = "Room1T3=" + Room1cookieT3 + expires + '; path=/';
+
+                    Room1cookieT4 = escape(document.passdata.t4.value) + ";";
+                    document.cookie = "Room1T4=" + Room1cookieT4 + expires + '; path=/';
+
+                    Room1cookieT5 = escape(document.passdata.t5.value) + ";";
+                    document.cookie = "Room1T5=" + Room1cookieT5 + expires + '; path=/';
+
+                    Room1cookieT6 = escape(document.passdata.t6.value) + ";";
+                    document.cookie = "Room1T6=" + Room1cookieT6 + expires + '; path=/';
+
+                    Room1cookieT7 = escape(document.passdata.t7.value) + ";";
+                    document.cookie = "Room1T7=" + Room1cookieT7 + expires + '; path=/';
+                }
+            }    
+        </script>
     </head>
     <body> 
         <div class="topborder">ADD/SIMULATE ROOMS</div>
         <div class="formspace">  
             <form name="passdata" action="/submit" method="post"> 
-                <label class="formlabels">Room Name:</label><br>
+                <label class="formlabels" type="text" name="RName">Room Name:</label><br>
                 <input class="formentries" type="text" name="Room"><br><br>
                 <select class="formlabels" id="mySelect" name="rlist">
                     <option value="Room1">Room 1 (top-left)</option>
@@ -42,15 +110,14 @@
                 <input class="formentries" type="text" name="t8"><br><br>
 
 
-                <input class="formbutton" type="submit" name="submit" value="Add Room">
+                <input class="formbutton" type="submit" name="submit" value="Add Room" onclick = "SaveCookies();">
 
             </form>
             <br>
             <form action="/simulate"> 
                 <input class="formbutton" type="submit" name="simulate" value="Simulate">
             </form>
-        </div>    
-
+        </div>   
     </body>
 
 
