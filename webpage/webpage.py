@@ -9,7 +9,7 @@ import requests_oauthlib
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from statistics import mean
 
-siteURL = "https://homemonitor.tech"
+siteURL = "https://www.homemonitor.tech"
 
 #Facebook
 facebookAuthURL = "https://www.facebook.com/dialog/oauth"
