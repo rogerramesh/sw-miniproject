@@ -1,4 +1,5 @@
 import flask
+from flask import request
 import os
 import plotly
 from plotly.subplots import make_subplots
@@ -8,7 +9,7 @@ import requests_oauthlib
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from statistics import mean
 
-#update with AWS website!
+#./nrgok http 5000
 siteURL = "https://127.0.0.1:5000"
 
 #Facebook
@@ -125,19 +126,19 @@ def callbackgoogle():
 def logout():
     return flask.redirect("/")	   	
 
-@app.route('/home/') # / - logged in
+@app.route('/home') # / - logged in
 def home():
     return flask.render_template('home.html')
 
-@app.route('/add-simulate/') # / - form for adding a room
+@app.route('/add-simulate') # / - form for adding a room
 def form():
 	return flask.render_template('form.html')
 
-@app.route('/remove/') # / - logged in
+@app.route('/remove') # / - logged in
 def removeform():
     return flask.render_template('removeform.html')		
 
-@app.route('/submit/',methods=['POST'])
+@app.route('/submit',methods=['POST'])
 def getValue():
 	Room = request.form['Room']
 	t1 = request.form['t1']
@@ -157,18 +158,22 @@ def getValue():
 	fig.add_trace(go.Scatter(x=timeX,y=tempY,mode='markers'))
 	fig.update_xaxes(title_text="Time of Day")
 	fig.update_yaxes(title_text="Temperature in Fahrenheit")
+	fig.update_layout(title_text="%s" % (Room), title_x=0.5)
 	fig.show()
 
 	Room_sel = request.form.get("rlist", None)
+	print(Room_sel)
 	if Room_sel != None:
 		if Room_sel == "Room1":
-			return flask.render_template("home.html",R1=Room_sel)
+			return flask.render_template("home.html",R1=True,R2=False,R3=False,R4=False)
 		elif Room_sel == "Room2":
-			return flask.render_template("home.html",R2=Room_sel)
+			return flask.render_template("home.html",R1=False,R2=True,R3=False,R4=False)
 		elif Room_sel == "Room3":
-			return flask.render_template("home.html",R3=Room_sel)
+			return flask.render_template("home.html",R1=False,R2=False,R3=True,R4=False)
+		elif Room_sel == "Room4":
+			return flask.render_template("home.html",R1=False,R2=False,R3=False,R4=True)
 		else:
-			return flask.render_template("home.html",R4=Room_sel)
+			return flask.render_template("home.html",R1=True,R2=False,R3=False,R4=False) #failsafe
 
 	"""
 	fig2.add_trace(go.Scatter(x=timeX,y=tempY,mode='markers'))
@@ -181,7 +186,7 @@ def getValue():
 		
 	"""			
 
-@app.route('/simulate/')
+@app.route('/simulate')
 def simulate():
 	random.seed(a=None, version=2)
 	timeX = ['12am','3am','6am','9am','12pm','3pm','6pm','9pm']
