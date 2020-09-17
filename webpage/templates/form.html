@@ -11,6 +11,25 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orienta">
 
         <script type = "text/javascript">
+            /*
+            function Validate() {
+                var form_entries = form.getElementsByTagName('input');
+                for (var i = 0; i < form_entries.length; i++) //failsafe for form entries
+                {
+                    if (inputs[i].hasAttribute("required")) 
+                    {
+                        if(inputs[i].value == "")
+                        {
+                            alert("Please fill out the form to add a room.");
+                            window.history.go(-1)
+                            return false;
+                        }    
+                    }    
+                }
+                //If all fields are there, save the cookies
+                return true;
+            }
+            */
             function SaveCookies() {
                 var expires = '',
                 date = new Date();
@@ -26,6 +45,7 @@
                 var t6 = document.getElementById('t6').value;
                 var t7 = document.getElementById('t7').value;
                 var t8 = document.getElementById('t8').value;
+                var humidity = document.getElementById('humidity').value;
 
                 if (document.passdata.rlist.value == "Room1") {
                     Room1cookieRName = escape(Room) + ";";
@@ -54,6 +74,9 @@
 
                     Room1cookieT8 = escape(t8) + ";";
                     document.cookie = "Room1T8=" + Room1cookieT8 + expires + '; path=/';
+
+                    Room1cookieH = escape(humidity) + ";";
+                    document.cookie = "Room1H=" + Room1cookieH + expires + '; path=/';
                 }
                 if (document.passdata.rlist.value == "Room2") {
                     Room2cookieRName = escape(Room) + ";";
@@ -82,6 +105,9 @@
 
                     Room2cookieT8 = escape(t8) + ";";
                     document.cookie = "Room2T8=" + Room2cookieT8 + expires + '; path=/';
+
+                    Room2cookieH = escape(humidity) + ";";
+                    document.cookie = "Room2H=" + Room2cookieH + expires + '; path=/';
                 }
                 if (document.passdata.rlist.value == "Room3") {
                     Room3cookieRName = escape(Room) + ";";
@@ -110,6 +136,9 @@
 
                     Room3cookieT8 = escape(t8) + ";";
                     document.cookie = "Room3T8=" + Room3cookieT8 + expires + '; path=/';
+
+                    Room3cookieH = escape(humidity) + ";";
+                    document.cookie = "Room3H=" + Room3cookieH + expires + '; path=/';
                 }
                 if (document.passdata.rlist.value == "Room4") {
                     Room4cookieRName = escape(Room) + ";";
@@ -138,6 +167,9 @@
 
                     Room4cookieT8 = escape(t8) + ";";
                     document.cookie = "Room4T8=" + Room4cookieT8 + expires + '; path=/';
+
+                    Room4cookieH = escape(humidity) + ";";
+                    document.cookie = "Room4H=" + Room4cookieH + expires + '; path=/';
                 }
             }    
         </script>
@@ -172,6 +204,8 @@
                 <input class="formentries" type="text" name="t7" id="t7" required><br><br>
                 <label class="formlabels">Temperature at 9PM:</label><br>
                 <input class="formentries" type="text" name="t8" id="t8" required><br><br>
+                <label class="formlabels">Humidity (as a percentage):</label><br>
+                <input class="formentries" type="text" name="humidity" id="humidity" required><br><br>
 
                 <input class="formbutton" type="submit" name="submit" value="Add Room" onclick="SaveCookies();">
 
@@ -182,4 +216,6 @@
             </form>
         </div>   
     </body>
+
+
 </html>
