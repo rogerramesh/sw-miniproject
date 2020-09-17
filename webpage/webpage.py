@@ -8,6 +8,7 @@ import random
 import requests_oauthlib
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from statistics import mean
+import time #testing
 
 #./nrgok http 5000
 siteURL = "https://127.0.0.1:5000"
@@ -159,21 +160,20 @@ def getValue():
 	fig.update_xaxes(title_text="Time of Day")
 	fig.update_yaxes(title_text="Temperature in Fahrenheit")
 	fig.update_layout(title_text="%s" % (Room), title_x=0.5)
-	fig.show()
+	#fig.show()
 
 	Room_sel = request.form.get("rlist", None)
-	print(Room_sel)
 	if Room_sel != None:
 		if Room_sel == "Room1":
-			return flask.render_template("home.html",R1=True,R2=False,R3=False,R4=False)
+			return flask.redirect("/home")
 		elif Room_sel == "Room2":
-			return flask.render_template("home.html",R1=False,R2=True,R3=False,R4=False)
+			return flask.redirect("/home")
 		elif Room_sel == "Room3":
-			return flask.render_template("home.html",R1=False,R2=False,R3=True,R4=False)
+			return flask.redirect("/home")
 		elif Room_sel == "Room4":
-			return flask.render_template("home.html",R1=False,R2=False,R3=False,R4=True)
+			return flask.redirect("/home")
 		else:
-			return flask.render_template("home.html",R1=True,R2=False,R3=False,R4=False) #failsafe
+			return flask.redirect("/home") #failsafe
 
 	"""
 	fig2.add_trace(go.Scatter(x=timeX,y=tempY,mode='markers'))
