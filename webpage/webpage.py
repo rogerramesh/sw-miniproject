@@ -8,8 +8,10 @@ import random
 import requests_oauthlib
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from statistics import mean
+import time #testing
 
-siteURL = "https://www.homemonitor.tech"
+#siteURL = "https://homemonitor.tech"
+siteURL = "https://www.127.0.0.1:5000"
 
 #Facebook
 facebookAuthURL = "https://www.facebook.com/dialog/oauth"
@@ -160,18 +162,7 @@ def getValue():
 	fig.update_layout(title_text="%s" % (Room), title_x=0.5)
 	#fig.show()
 
-	Room_sel = request.form.get("rlist", None)
-	if Room_sel != None:
-		if Room_sel == "Room1":
-			return flask.redirect("/home")
-		elif Room_sel == "Room2":
-			return flask.redirect("/home")
-		elif Room_sel == "Room3":
-			return flask.redirect("/home")
-		elif Room_sel == "Room4":
-			return flask.redirect("/home")
-		else:
-			return flask.redirect("/home") #failsafe
+	return flask.redirect("/home")
 
 	"""
 	fig2.add_trace(go.Scatter(x=timeX,y=tempY,mode='markers'))
@@ -183,6 +174,9 @@ def getValue():
 	fig.show()
 		
 	"""			
+@app.route('/submit-remove',methods=['POST'])
+def remove_redirect():
+	return flask.redirect("/home")
 
 @app.route('/simulate')
 def simulate():
