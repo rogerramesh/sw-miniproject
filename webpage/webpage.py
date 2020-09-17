@@ -8,9 +8,8 @@ import random
 import requests_oauthlib
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from statistics import mean
-import time #testing
 
-siteURL = "https://homemonitor.tech"
+siteURL = "https://52.205.164.138:443"
 
 #Facebook
 facebookAuthURL = "https://www.facebook.com/dialog/oauth"
@@ -43,38 +42,41 @@ def main():
 
 @app.route('/login-fb') #login with fb
 def login():
-    fb = requests_oauthlib.OAuth2Session(
-        facebookClientID, redirect_uri=siteURL + "/callback-fb", scope=facebookScope
-    )
-    authURL, _ = fb.authorization_url(facebookAuthURL)
+	fb = requests_oauthlib.OAuth2Session(
+		facebookClientID, redirect_uri=siteURL + "/callback-fb", scope=facebookScope
+	)
 
-    return flask.redirect(authURL)
+	authURL, _ = fb.authorization_url(facebookAuthURL)
+
+	print(authURL)
+	return flask.redirect(authURL)
 
 @app.route("/callback-fb") #login routing with fb
 def callback():
-    fb = requests_oauthlib.OAuth2Session(
+	fb = requests_oauthlib.OAuth2Session(
         facebookClientID, scope=facebookScope, redirect_uri=siteURL + "/callback-fb"
-    )
-    #compliance fix
-    fb = facebook_compliance_fix(fb)
+	)
 
-    fb.fetch_token(
+    #compliance fix
+	fb = facebook_compliance_fix(fb)
+
+	fb.fetch_token(
         facebookTokenURL,
         client_secret=facebookSecretID,
         authorization_response=flask.request.url,
     )
 
     #get user data
-    fbUserData = fb.get(
+	fbUserData = fb.get(
         "https://graph.facebook.com/me?fields=id,name,email,picture{url}"
     ).json()
 
     #show user they're logged in
-    email = fbUserData["email"]
-    name = fbUserData["name"]
-    pic = fbUserData.get("picture", {}).get("data", {}).get("url")
+	email = fbUserData["email"]
+	name = fbUserData["name"]
+	pic = fbUserData.get("picture", {}).get("data", {}).get("url")
 
-    return f"""
+	return f"""
 	Logged into Facebook as: <br><br>
 	Email: {email} <br>
 	Name: {name} <br>
@@ -94,7 +96,7 @@ def logingoogle():
     flask.session['oauth_state'] = gState
     return flask.redirect(authURL)
 
-@app.route('/callback-google', methods=["GET"]) #login routing with google
+@app.route('/callback-google') #login routing with google
 def callbackgoogle():
 	google = requests_oauthlib.OAuth2Session(
 		googleClientID, redirect_uri=siteURL + "/callback-google", state=flask.session['oauth_state']
