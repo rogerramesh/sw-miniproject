@@ -9,23 +9,150 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster+Two">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orienta">
+
+        <script type = "text/javascript">
+            function RemoveCookies() {
+                var expires = '',
+                date = new Date();
+                date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000)); //saves the cookie as empty for a year
+                expires = '; expires=' + date.toGMTString();
+
+                var checkRoom1 = document.getElementById("room1");
+                var checkRoom2 = document.getElementById("room2");
+                var checkRoom3 = document.getElementById("room3");
+                var checkRoom4 = document.getElementById("room4");
+
+                if (checkRoom1.checked == true) {
+                    Room1cookieRName = "" + ";";
+                    document.cookie = "Room1RName=" + Room1cookieRName + expires + '; path=/';
+
+                    Room1cookieT1 = "" + ";";
+                    document.cookie = "Room1T1=" + Room1cookieT1 + expires + '; path=/';
+
+                    Room1cookieT2 = "" + ";";
+                    document.cookie = "Room1T2=" + Room1cookieT2 + expires + '; path=/';
+
+                    Room1cookieT3 = "" + ";";
+                    document.cookie = "Room1T3=" + Room1cookieT3 + expires + '; path=/';
+
+                    Room1cookieT4 = "" + ";";
+                    document.cookie = "Room1T4=" + Room1cookieT4 + expires + '; path=/';
+
+                    Room1cookieT5 = "" + ";";
+                    document.cookie = "Room1T5=" + Room1cookieT5 + expires + '; path=/';
+
+                    Room1cookieT6 = "" + ";";
+                    document.cookie = "Room1T6=" + Room1cookieT6 + expires + '; path=/';
+
+                    Room1cookieT7 = "" + ";";
+                    document.cookie = "Room1T7=" + Room1cookieT7 + expires + '; path=/';
+
+                    Room1cookieT8 = "" + ";";
+                    document.cookie = "Room1T8=" + Room1cookieT8 + expires + '; path=/';
+                }
+                if (checkRoom2.checked == true) {
+                    Room2cookieRName = "" + ";";
+                    document.cookie = "Room2RName=" + Room2cookieRName + expires + '; path=/';
+
+                    Room2cookieT1 = "" + ";";
+                    document.cookie = "Room2T1=" + Room2cookieT1 + expires + '; path=/';
+
+                    Room2cookieT2 = "" + ";";
+                    document.cookie = "Room2T2=" + Room2cookieT2 + expires + '; path=/';
+
+                    Room2cookieT3 = "" + ";";
+                    document.cookie = "Room2T3=" + Room2cookieT3 + expires + '; path=/';
+
+                    Room2cookieT4 = "" + ";";
+                    document.cookie = "Room2T4=" + Room2cookieT4 + expires + '; path=/';
+
+                    Room2cookieT5 = "" + ";";
+                    document.cookie = "Room2T5=" + Room2cookieT5 + expires + '; path=/';
+
+                    Room2cookieT6 = "" + ";";
+                    document.cookie = "Room2T6=" + Room2cookieT6 + expires + '; path=/';
+
+                    Room2cookieT7 = "" + ";";
+                    document.cookie = "Room2T7=" + Room2cookieT7 + expires + '; path=/';
+
+                    Room2cookieT8 = "" + ";";
+                    document.cookie = "Room2T8=" + Room2cookieT8 + expires + '; path=/';
+                }
+                if (checkRoom3.checked == true) {
+                    Room3cookieRName = "" + ";";
+                    document.cookie = "Room3RName=" + Room3cookieRName + expires + '; path=/';
+
+                    Room3cookieT1 = "" + ";";
+                    document.cookie = "Room3T1=" + Room3cookieT1 + expires + '; path=/';
+
+                    Room3cookieT2 = "" + ";";
+                    document.cookie = "Room3T2=" + Room3cookieT2 + expires + '; path=/';
+
+                    Room3cookieT3 = "" + ";";
+                    document.cookie = "Room3T3=" + Room3cookieT3 + expires + '; path=/';
+
+                    Room3cookieT4 = "" + ";";
+                    document.cookie = "Room3T4=" + Room3cookieT4 + expires + '; path=/';
+
+                    Room3cookieT5 = "" + ";";
+                    document.cookie = "Room3T5=" + Room3cookieT5 + expires + '; path=/';
+
+                    Room3cookieT6 = "" + ";";
+                    document.cookie = "Room3T6=" + Room3cookieT6 + expires + '; path=/';
+
+                    Room3cookieT7 = "" + ";";
+                    document.cookie = "Room3T7=" + Room3cookieT7 + expires + '; path=/';
+
+                    Room3cookieT8 = "" + ";";
+                    document.cookie = "Room3T8=" + Room3cookieT8 + expires + '; path=/';
+                }
+                if (checkRoom4.checked == true) {
+                    Room4cookieRName = "" + ";";
+                    document.cookie = "Room4RName=" + Room4cookieRName + expires + '; path=/';
+
+                    Room4cookieT1 = "" + ";";
+                    document.cookie = "Room4T1=" + Room4cookieT1 + expires + '; path=/';
+
+                    Room4cookieT2 = "" + ";";
+                    document.cookie = "Room4T2=" + Room4cookieT2 + expires + '; path=/';
+
+                    Room4cookieT3 = "" + ";";
+                    document.cookie = "Room4T3=" + Room4cookieT3 + expires + '; path=/';
+
+                    Room4cookieT4 = "" + ";";
+                    document.cookie = "Room4T4=" + Room4cookieT4 + expires + '; path=/';
+
+                    Room4cookieT5 = "" + ";";
+                    document.cookie = "Room4T5=" + Room4cookieT5 + expires + '; path=/';
+
+                    Room4cookieT6 = "" + ";";
+                    document.cookie = "Room4T6=" + Room4cookieT6 + expires + '; path=/';
+
+                    Room4cookieT7 = "" + ";";
+                    document.cookie = "Room4T7=" + Room4cookieT7 + expires + '; path=/';
+
+                    Room4cookieT8 = "" + ";";
+                    document.cookie = "Room4T8=" + Room4cookieT8 + expires + '; path=/';
+                }
+            }
+        </script>
     </head>
     <body>
         <div class="topborder">REMOVE ROOMS</div>
         <div class="formspace" style="margin-top: 100px">
-            <form name = "removedata" action="/home" method=""> <!--action="/submit-remove" method="post"-->
+            <form name = "removedata" action="/submit-remove" method="post">
                 <label class = "formlabels">Select the room or multiple rooms to remove.</label><br><br>
 
-                <input type="checkbox" id="room1" name="room1" value="Room_1">
+                <input type="checkbox" id="room1" name="room1" value="Room1">
                 <label class = "formlabels" for="room1">Room 1 (top-left)</label><br>
-                <input type="checkbox" id="room2" name="room2" value="Room_2">
+                <input type="checkbox" id="room2" name="room2" value="Room2">
                 <label class = "formlabels" for="room2">Room 2 (top-right)</label><br>
-                <input type="checkbox" id="room3" name="room3" value="Room_3">
+                <input type="checkbox" id="room3" name="room3" value="Room3">
                 <label class = "formlabels" for="room3">Room 3 (bottom-left)</label><br>
-                <input type="checkbox" id="room4" name="room4" value="Room_4">
+                <input type="checkbox" id="room4" name="room4" value="Room4">
                 <label class = "formlabels" for="room4">Room 4 (bottom-right)</label><br><br>
 
-                <input class="formbutton" type="submit" name="submit" value="Remove Room/s">
+                <input class="formbutton" type="submit" name="submit" value="Remove Room/s" onclick="RemoveCookies();">
             </form>
         </div>    
         <script>
