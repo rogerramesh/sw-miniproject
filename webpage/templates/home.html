@@ -11,8 +11,76 @@
 	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo">
 	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster+Two">
 	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orienta">
+	</head>
 
-		<script type = "text/javascript">
+	<body>
+		<div class="topborder">HOME MONITOR</div>
+		<div class="settingsbar">
+			<div class="settingstext" style="color: #FFFFFF">Settings</div>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Add Room" onclick="addsimulateButton()">Add/Simulate Rooms</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Delete Room" onclick="removeButton()">Remove/Reset Rooms</button>
+			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Logout" onclick="logoutButton()">Log Out</button>
+		</div>
+
+		<table class="roomspace">
+			<tr>
+				<th>
+					<div class="rooms" name="room1" style="margin-top: 50px; margin-left: 95%">
+						<p class="roomtitle" id="room1name"></p>
+						<p class="roomstats" id="room1t1"></p>
+						<p class="roomstats" id="room1t2"></p>
+						<p class="roomstats" id="room1t3"></p>
+						<p class="roomstats" id="room1t4"></p>
+						<p class="roomstats" id="room1t5"></p>
+						<p class="roomstats" id="room1t6"></p>
+						<p class="roomstats" id="room1t7"></p>
+						<p class="roomstats" id="room1t8"></p>
+					</div>	
+				</th>
+				<th>	
+					<div class="rooms" name="room2" style="margin-top: 50px; margin-left: 95%">
+						<p class="roomtitle" id="room2name"></p>
+						<p class="roomstats" id="room2t1"></p>
+						<p class="roomstats" id="room2t2"></p>
+						<p class="roomstats" id="room2t3"></p>
+						<p class="roomstats" id="room2t4"></p>
+						<p class="roomstats" id="room2t5"></p>
+						<p class="roomstats" id="room2t6"></p>
+						<p class="roomstats" id="room2t7"></p>
+						<p class="roomstats" id="room2t8"></p>
+					</div>
+				</th>	
+			</tr>
+			<tr>
+				<th>	
+					<div class="rooms" name="room3" style="margin-top: 50px; margin-left: 95%">
+						<p class="roomtitle" id="room3name"></p>
+						<p class="roomstats" id="room3t1"></p>
+						<p class="roomstats" id="room3t2"></p>
+						<p class="roomstats" id="room3t3"></p>
+						<p class="roomstats" id="room3t4"></p>
+						<p class="roomstats" id="room3t5"></p>
+						<p class="roomstats" id="room3t6"></p>
+						<p class="roomstats" id="room3t7"></p>
+						<p class="roomstats" id="room3t8"></p>
+					</div>
+				</th>
+				<th>	
+					<div class="rooms" name="room4" style="margin-top: 50px; margin-left: 95%">
+						<p class="roomtitle" id="room4name"></p>
+						<p class="roomstats" id="room4t1"></p>
+						<p class="roomstats" id="room4t2"></p>
+						<p class="roomstats" id="room4t3"></p>
+						<p class="roomstats" id="room4t4"></p>
+						<p class="roomstats" id="room4t5"></p>
+						<p class="roomstats" id="room4t6"></p>
+						<p class="roomstats" id="room4t7"></p>
+						<p class="roomstats" id="room4t8"></p>
+					</div>
+				</th>	
+			</tr>	
+		</div>
+		<script type = "text/javascript"> //Load html and then script
 			function addsimulateButton() {
 				window.location='/add-simulate';
   			}
@@ -29,49 +97,147 @@
 	        	for(var i = 0; i < cookies.length; i++) {
 	            	name = cookies[i].split('=')[0];
 	            	value = cookies[i].split('=')[1];
-	            	console.log("Key is : " + name + " and Value is : " + value);
+	            	if (name == "Room1RName" || name == " Room1RName") {
+	            		if (value != "") {
+	            			value = value.replace(/%20/g, " ");
+	            			document.getElementById('room1name').innerHTML = value;
+	            		}
+	            		else {
+	            			document.getElementById('room1name').innerHTML = "Room 1";
+	            		}
+	            	}
+	            	if (name == "Room1T1" || name == " Room1T1") {
+	            		document.getElementById('room1t1').innerHTML = "Temperature at 12AM: " + value;
+	            	}
+	            	if (name == "Room1T2" || name == " Room1T2") {
+	            		document.getElementById('room1t2').innerHTML = "Temperature at 3AM: " + value;
+	            	}
+	            	if (name == "Room1T3" || name == " Room1T3") {
+	            		document.getElementById('room1t3').innerHTML = "Temperature at 6AM: " + value;
+	            	}
+	            	if (name == "Room1T4" || name == " Room1T4") {
+	            		document.getElementById('room1t4').innerHTML = "Temperature at 9AM: " + value;
+	            	}
+	            	if (name == "Room1T5" || name == " Room1T5") {
+	            		document.getElementById('room1t5').innerHTML = "Temperature at 12PM: " + value;
+	            	}
+	            	if (name == "Room1T6" || name == " Room1T6") {
+	            		document.getElementById('room1t6').innerHTML = "Temperature at 3PM: " + value;
+	            	}
+	            	if (name == "Room1T7" || name == " Room1T7") {
+	            		document.getElementById('room1t7').innerHTML = "Temperature at 6PM: " + value;
+	            	}
+	            	if (name == "Room1T8" || name == " Room1T8") {
+	            		document.getElementById('room1t8').innerHTML = "Temperature at 9PM: " + value;
+	            	}
+
+	            	if (name == "Room2RName" || name == " Room2RName") {
+	            		if (!(value == "")) {
+	            			value = value.replace(/%20/g, " ");
+	            			document.getElementById('room2name').innerHTML = value;
+	            		}
+	            		else {
+	            			document.getElementById('room2name').innerHTML = "Room 2";
+	            		}
+	            	}
+	            	if (name == "Room2T1" || name == " Room2T1") {
+	            		document.getElementById('room2t1').innerHTML = "Temperature at 12AM: " + value;
+	            	}
+	            	if (name == "Room2T2" || name == " Room2T2") {
+	            		document.getElementById('room2t2').innerHTML = "Temperature at 3AM: " + value;
+	            	}
+	            	if (name == "Room2T3" || name == " Room2T3") {
+	            		document.getElementById('room2t3').innerHTML = "Temperature at 6AM: " + value;
+	            	}
+	            	if (name == "Room2T4" || name == " Room2T4") {
+	            		document.getElementById('room2t4').innerHTML = "Temperature at 9AM: " + value;
+	            	}
+	            	if (name == "Room2T5" || name == " Room2T5") {
+	            		document.getElementById('room2t5').innerHTML = "Temperature at 12PM: " + value;
+	            	}
+	            	if (name == "Room2T6" || name == " Room2T6") {
+	            		document.getElementById('room2t6').innerHTML = "Temperature at 3PM: " + value;
+	            	}
+	            	if (name == "Room2T7" || name == " Room2T7") {
+	            		document.getElementById('room2t7').innerHTML = "Temperature at 6PM: " + value;
+	            	}
+	            	if (name == "Room2T8" || name == " Room2T8") {
+	            		document.getElementById('room2t8').innerHTML = "Temperature at 9PM: " + value;
+	            	}
+
+	            	if (name == "Room3RName" || name == " Room3RName") {
+	            		if (value != "") {
+	            			value = value.replace(/%20/g, " ");
+	            			document.getElementById('room3name').innerHTML = value;
+	            		}
+	            		else {
+	            			document.getElementById('room3name').innerHTML = "Room 3";
+	            		}
+	            	}
+	            	if (name == "Room3T1" || name == " Room3T1") {
+	            		document.getElementById('room3t1').innerHTML = "Temperature at 12AM: " + value;
+	            	}
+	            	if (name == "Room3T2" || name == " Room3T2") {
+	            		document.getElementById('room3t2').innerHTML = "Temperature at 3AM: " + value;
+	            	}
+	            	if (name == "Room3T3" || name == " Room3T3") {
+	            		document.getElementById('room3t3').innerHTML = "Temperature at 6AM: " + value;
+	            	}
+	            	if (name == "Room3T4" || name == " Room3T4") {
+	            		document.getElementById('room3t4').innerHTML = "Temperature at 9AM: " + value;
+	            	}
+	            	if (name == "Room3T5" || name == " Room3T5") {
+	            		document.getElementById('room3t5').innerHTML = "Temperature at 12PM: " + value;
+	            	}
+	            	if (name == "Room3T6" || name == " Room3T6") {
+	            		document.getElementById('room3t6').innerHTML = "Temperature at 3PM: " + value;
+	            	}
+	            	if (name == "Room3T7" || name == " Room3T7") {
+	            		document.getElementById('room3t7').innerHTML = "Temperature at 6PM: " + value;
+	            	}
+	            	if (name == "Room3T8" || name == " Room3T8") {
+	            		document.getElementById('room3t8').innerHTML = "Temperature at 9PM: " + value;
+	            	}
+
+	            	if (name == "Room4RName" || name == " Room4RName") {
+	            		if (value != "") {
+	            			value = value.replace(/%20/g, " ");
+	            			document.getElementById('room4name').innerHTML = value;
+	            		}
+	            		else {
+	            			document.getElementById('room4name').innerHTML = "Room 4";
+	            		}
+	            	}
+	            	if (name == "Room4T1" || name == " Room4T1") {
+	            		document.getElementById('room4t1').innerHTML = "Temperature at 12AM: " + value;
+	            	}
+	            	if (name == "Room4T2" || name == " Room4T2") {
+	            		document.getElementById('room4t2').innerHTML = "Temperature at 3AM: " + value;
+	            	}
+	            	if (name == "Room4T3" || name == " Room4T3") {
+	            		document.getElementById('room4t3').innerHTML = "Temperature at 6AM: " + value;
+	            	}
+	            	if (name == "Room4T4" || name == " Room4T4") {
+	            		document.getElementById('room4t4').innerHTML = "Temperature at 9AM: " + value;
+	            	}
+	            	if (name == "Room4T5" || name == " Room4T5") {
+	            		document.getElementById('room4t5').innerHTML = "Temperature at 12PM: " + value;
+	            	}
+	            	if (name == "Room4T6" || name == " Room4T6") {
+	            		document.getElementById('room4t6').innerHTML = "Temperature at 3PM: " + value;
+	            	}
+	            	if (name == "Room4T7" || name == " Room4T7") {
+	            		document.getElementById('room4t7').innerHTML = "Temperature at 6PM: " + value;
+	            	}
+	            	if (name == "Room4T8" || name == " Room4T8") {
+	            		document.getElementById('room4t8').innerHTML = "Temperature at 9PM: " + value;
+	            	}
+	            	console.log("Key is : " + name + " and Value is : " + value); //showing cookies to the page for debug
 	        	}
             }
 		</script>
-	</head>
-
-	<body>
 		<script type = "text/javascript">
 			LoadCookies();
-		</script>
-		<div class="topborder">HOME MONITOR</div>
-		<div class="settingsbar">
-			<div class="settingstext" style="color: #FFFFFF">Settings</div>
-			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Add Room" onclick="addsimulateButton()">Add/Simulate Rooms</button>
-			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Delete Room" onclick="removeButton()">Remove/Reset Rooms</button>
-			<button class="buttonsettings" style="background-color: #338EC1; margin: 10px 0" input type="submit" value="Logout" onclick="logoutButton()">Log Out</button>
-		</div>
-
-		<table class="roomspace">
-			<tr>
-				<th>
-					<div class="rooms" name="room1" style="margin-top: 50px; margin-left: 95%">
-						<div class="roomtitle">Placeholder</div>
-					</div>	
-				</th>
-				<th>	
-					<div class="rooms" name="room2" style="margin-top: 50px; margin-left: 95%">
-						<div class="roomtitle">Placeholder</div>
-					</div>
-				</th>	
-			</tr>
-			<tr>
-				<th>	
-					<div class="rooms" name="room3" style="margin-top: 50px; margin-left: 95%">
-						<div class="roomtitle">Placeholder</div>
-					</div>
-				</th>
-				<th>	
-					<div class="rooms" name="room4" style="margin-top: 50px; margin-left: 95%">
-						<div class="roomtitle">Placeholder</div>
-					</div>
-				</th>	
-			</tr>	
-		</div>		
+		</script>		
 	</body>
 </html>	
