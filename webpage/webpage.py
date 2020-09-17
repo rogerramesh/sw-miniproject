@@ -113,8 +113,6 @@ def callbackgoogle():
 	email = googleUserData["email"]
 	name = googleUserData["name"]
 
-	print(googleUserData)
-
 	return f"""
 	Logged into Google as: <br><br>
 	Email: {email} <br>
