@@ -12,68 +12,132 @@
 
         <script type = "text/javascript">
             function SaveCookies() {
-                if (document.passdata.rlist == "") {
-                    alert("Please fill out the form to add a room.");
-                    return;
-                }
-                if (document.passdata.RName == "") {
-                    alert("Please fill out the form to add a room.");
-                    return;
-                }
-                if (document.passdata.t1 == "") {
-                    alert("Please fill out the form to add a room.");
-                    return;
-                }
-                if (document.passdata.t2 == "") {
-                    alert("Please fill out the form to add a room.");
-                    return;
-                }
-                if (document.passdata.t3 == "") {
-                    alert("Please fill out the form to add a room.");
-                    return;
-                }
-                if (document.passdata.t4 == "") {
-                    alert("Please fill out the form to add a room.");
-                    return;
-                }
-                if (document.passdata.t5 == "") {
-                    alert("Please fill out the form to add a room.");
-                    return;
-                }
-                if (document.passdata.t6 == "") {
-                    alert("Please fill out the form to add a room.");
-                    return;
-                }
-                if (document.passdata.t7 == "") {
-                    alert("Please fill out the form to add a room.");
-                    return;
-                }
                 var expires = '',
                 date = new Date();
                 date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000)); //saves the cookie for a year
                 expires = '; expires=' + date.toGMTString();
 
+                var Room = document.getElementById('Room').value;
+                var t1 = document.getElementById('t1').value;
+                var t2 = document.getElementById('t2').value;
+                var t3 = document.getElementById('t3').value;
+                var t4 = document.getElementById('t4').value;
+                var t5 = document.getElementById('t5').value;
+                var t6 = document.getElementById('t6').value;
+                var t7 = document.getElementById('t7').value;
+                var t8 = document.getElementById('t8').value;
+
                 if (document.passdata.rlist.value == "Room1") {
-                    Room1cookieT1 = escape(document.passdata.t1.value) + ";";
+                    Room1cookieRName = escape(Room) + ";";
+                    document.cookie = "Room1RName=" + Room1cookieRName + expires + '; path=/';
+
+                    Room1cookieT1 = escape(t1) + ";";
                     document.cookie = "Room1T1=" + Room1cookieT1 + expires + '; path=/';
 
-                    Room1cookieT2 = escape(document.passdata.t2.value) + ";";
+                    Room1cookieT2 = escape(t2) + ";";
                     document.cookie = "Room1T2=" + Room1cookieT2 + expires + '; path=/';
 
-                    Room1cookieT3 = escape(document.passdata.t3.value) + ";";
+                    Room1cookieT3 = escape(t3) + ";";
                     document.cookie = "Room1T3=" + Room1cookieT3 + expires + '; path=/';
 
-                    Room1cookieT4 = escape(document.passdata.t4.value) + ";";
+                    Room1cookieT4 = escape(t4) + ";";
                     document.cookie = "Room1T4=" + Room1cookieT4 + expires + '; path=/';
 
-                    Room1cookieT5 = escape(document.passdata.t5.value) + ";";
+                    Room1cookieT5 = escape(t5) + ";";
                     document.cookie = "Room1T5=" + Room1cookieT5 + expires + '; path=/';
 
-                    Room1cookieT6 = escape(document.passdata.t6.value) + ";";
+                    Room1cookieT6 = escape(t6) + ";";
                     document.cookie = "Room1T6=" + Room1cookieT6 + expires + '; path=/';
 
-                    Room1cookieT7 = escape(document.passdata.t7.value) + ";";
+                    Room1cookieT7 = escape(t7) + ";";
                     document.cookie = "Room1T7=" + Room1cookieT7 + expires + '; path=/';
+
+                    Room1cookieT8 = escape(t8) + ";";
+                    document.cookie = "Room1T8=" + Room1cookieT8 + expires + '; path=/';
+                }
+                if (document.passdata.rlist.value == "Room2") {
+                    Room2cookieRName = escape(Room) + ";";
+                    document.cookie = "Room2RName=" + Room2cookieRName + expires + '; path=/';
+
+                    Room2cookieT1 = escape(t1) + ";";
+                    document.cookie = "Room2T1=" + Room2cookieT1 + expires + '; path=/';
+
+                    Room2cookieT2 = escape(t2) + ";";
+                    document.cookie = "Room2T2=" + Room2cookieT2 + expires + '; path=/';
+
+                    Room2cookieT3 = escape(t3) + ";";
+                    document.cookie = "Room2T3=" + Room2cookieT3 + expires + '; path=/';
+
+                    Room2cookieT4 = escape(t4) + ";";
+                    document.cookie = "Room2T4=" + Room2cookieT4 + expires + '; path=/';
+
+                    Room2cookieT5 = escape(t5) + ";";
+                    document.cookie = "Room2T5=" + Room2cookieT5 + expires + '; path=/';
+
+                    Room2cookieT6 = escape(t6) + ";";
+                    document.cookie = "Room2T6=" + Room2cookieT6 + expires + '; path=/';
+
+                    Room2cookieT7 = escape(t7) + ";";
+                    document.cookie = "Room2T7=" + Room2cookieT7 + expires + '; path=/';
+
+                    Room2cookieT8 = escape(t8) + ";";
+                    document.cookie = "Room2T8=" + Room2cookieT8 + expires + '; path=/';
+                }
+                if (document.passdata.rlist.value == "Room3") {
+                    Room3cookieRName = escape(Room) + ";";
+                    document.cookie = "Room3RName=" + Room3cookieRName + expires + '; path=/';
+
+                    Room3cookieT1 = escape(t1) + ";";
+                    document.cookie = "Room3T1=" + Room3cookieT1 + expires + '; path=/';
+
+                    Room3cookieT2 = escape(t2) + ";";
+                    document.cookie = "Room3T2=" + Room3cookieT2 + expires + '; path=/';
+
+                    Room3cookieT3 = escape(t3) + ";";
+                    document.cookie = "Room3T3=" + Room3cookieT3 + expires + '; path=/';
+
+                    Room3cookieT4 = escape(t4) + ";";
+                    document.cookie = "Room3T4=" + Room3cookieT4 + expires + '; path=/';
+
+                    Room3cookieT5 = escape(t5) + ";";
+                    document.cookie = "Room3T5=" + Room3cookieT5 + expires + '; path=/';
+
+                    Room3cookieT6 = escape(t6) + ";";
+                    document.cookie = "Room3T6=" + Room3cookieT6 + expires + '; path=/';
+
+                    Room3cookieT7 = escape(t7) + ";";
+                    document.cookie = "Room3T7=" + Room3cookieT7 + expires + '; path=/';
+
+                    Room3cookieT8 = escape(t8) + ";";
+                    document.cookie = "Room3T8=" + Room3cookieT8 + expires + '; path=/';
+                }
+                if (document.passdata.rlist.value == "Room4") {
+                    Room4cookieRName = escape(Room) + ";";
+                    document.cookie = "Room4RName=" + Room4cookieRName + expires + '; path=/';
+
+                    Room4cookieT1 = escape(t1) + ";";
+                    document.cookie = "Room4T1=" + Room4cookieT1 + expires + '; path=/';
+
+                    Room4cookieT2 = escape(t2) + ";";
+                    document.cookie = "Room4T2=" + Room4cookieT2 + expires + '; path=/';
+
+                    Room4cookieT3 = escape(t3) + ";";
+                    document.cookie = "Room4T3=" + Room4cookieT3 + expires + '; path=/';
+
+                    Room4cookieT4 = escape(t4) + ";";
+                    document.cookie = "Room4T4=" + Room4cookieT4 + expires + '; path=/';
+
+                    Room4cookieT5 = escape(t5) + ";";
+                    document.cookie = "Room4T5=" + Room4cookieT5 + expires + '; path=/';
+
+                    Room4cookieT6 = escape(t6) + ";";
+                    document.cookie = "Room4T6=" + Room4cookieT6 + expires + '; path=/';
+
+                    Room4cookieT7 = escape(t7) + ";";
+                    document.cookie = "Room4T7=" + Room4cookieT7 + expires + '; path=/';
+
+                    Room4cookieT8 = escape(t8) + ";";
+                    document.cookie = "Room4T8=" + Room4cookieT8 + expires + '; path=/';
                 }
             }    
         </script>
@@ -81,9 +145,9 @@
     <body> 
         <div class="topborder">ADD/SIMULATE ROOMS</div>
         <div class="formspace">  
-            <form name="passdata" action="/submit" method="post"> 
+            <form name="passdata" action="/submit" method="post"> <!-- onsubmit="return Validate(this);"-->
                 <label class="formlabels" type="text" name="RName">Room Name:</label><br>
-                <input class="formentries" type="text" name="Room"><br><br>
+                <input class="formentries" type="text" name="Room" id="Room" required><br><br>
                 <select class="formlabels" id="mySelect" name="rlist">
                     <option value="Room1">Room 1 (top-left)</option>
                     <option value="Room2">Room 2 (top-right)</option>
@@ -93,24 +157,23 @@
 
                 <label class="formlabels">Temperatures are in Fahrenheit.</label><br>
                 <label class="formlabels">Temperature at 12AM:</label><br>
-                <input class="formentries" type="text" name="t1"><br><br>
+                <input class="formentries" type="text" name="t1" id="t1" required><br><br>
                 <label class="formlabels">Temperature at 3AM:</label><br>
-                <input class="formentries" type="text" name="t2"><br><br>
+                <input class="formentries" type="text" name="t2" id="t2" required><br><br>
                 <label class="formlabels">Temperature at 6AM:</label><br>
-                <input class="formentries" type="text" name="t3"><br><br>
+                <input class="formentries" type="text" name="t3" id="t3" required><br><br>
                 <label class="formlabels">Temperature at 9AM</label><br>
-                <input class="formentries" type="text" name="t4"><br><br>
+                <input class="formentries" type="text" name="t4" id="t4" required><br><br>
                 <label class="formlabels">Temperature at 12PM:</label><br>
-                <input class="formentries" type="text" name="t5"><br><br>
+                <input class="formentries" type="text" name="t5" id="t5" required><br><br>
                 <label class="formlabels">Temperature at 3PM:</label><br>
-                <input class="formentries" type="text" name="t6"><br><br>
+                <input class="formentries" type="text" name="t6" id="t6" required><br><br>
                 <label class="formlabels">Temperature at 6PM:</label><br>
-                <input class="formentries" type="text" name="t7"><br><br>
+                <input class="formentries" type="text" name="t7" id="t7" required><br><br>
                 <label class="formlabels">Temperature at 9PM:</label><br>
-                <input class="formentries" type="text" name="t8"><br><br>
+                <input class="formentries" type="text" name="t8" id="t8" required><br><br>
 
-
-                <input class="formbutton" type="submit" name="submit" value="Add Room" onclick = "SaveCookies();">
+                <input class="formbutton" type="submit" name="submit" value="Add Room" onclick="SaveCookies();">
 
             </form>
             <br>
@@ -119,6 +182,4 @@
             </form>
         </div>   
     </body>
-
-
 </html>
