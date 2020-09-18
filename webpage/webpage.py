@@ -1,5 +1,5 @@
 import flask
-from flask import request
+from flask import request, Markup
 import os
 import plotly
 from plotly.subplots import make_subplots
@@ -8,7 +8,6 @@ import random
 import requests_oauthlib
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 from statistics import mean
-import time #testing
 
 #siteURL = "https://www.homemonitor.tech"
 #siteURL = "https://127.0.0.1:5000"
@@ -165,9 +164,9 @@ def getValue():
 	fig.update_xaxes(title_text="Time of Day")
 	fig.update_yaxes(title_text="Temperature in Fahrenheit")
 	fig.update_layout(title_text="%s" % (Room), title_x=0.5)
-	fig.show()
+	#fig.show()
 
-	return flask.redirect("/home")
+	return flask.render_template('home.html')
 
 	"""
 	fig2.add_trace(go.Scatter(x=timeX,y=tempY,mode='markers'))
@@ -185,6 +184,7 @@ def remove_redirect():
 
 @app.route('/simulate')
 def simulate():
+	""" Code moved to JavaScript
 	random.seed(a=None, version=2)
 	timeX = ['12am','3am','6am','9am','12pm','3pm','6pm','9pm']
 	fig = make_subplots(rows=2, cols=2)
@@ -222,9 +222,10 @@ def simulate():
 	fig.update_xaxes(title_text="Time of Day")
 	fig.update_yaxes(title_text="Temperature in Fahrenheit")
 	fig.update_layout(title_text="Simulated Room Data", title_x=0.5)
-	fig.show()
 
-	return flask.render_template("home.html")					
+	url = plotly.newPlot(fig, filename='simulation graph', auto_open=False)
+	"""
+	return flask.render_template("simulate.html")				
 
 if __name__ == "__main__":
 	app.run(ssl_context="adhoc", debug="True") 
