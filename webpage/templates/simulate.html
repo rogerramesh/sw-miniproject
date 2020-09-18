@@ -1,0 +1,56 @@
+<!-- Luke Staib 2020 -->
+<!-- Websites are placeholders, implement SSO and create failed and successful login paths -->
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Home Monitor - Login</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster+Two">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orienta">
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	</head>
+
+	<body>
+		<div class="topborder">SIMULATED GRAPH</div>
+		<div id="sim"></div>
+		<a class="buttonlist" href="/home">Return Home</a>
+
+		<script>
+			var graph = document.getElementById('sim')
+
+			var t1 = Math.random() * 100;
+			var t2 = Math.random() * 100;
+			var t3 = Math.random() * 100;
+			var t4 = Math.random() * 100;
+			var t5 = Math.random() * 100;
+			var t6 = Math.random() * 100;
+			var t7 = Math.random() * 100;
+			var t8 = Math.random() * 100;
+
+			var data = [{
+				x: ['12am','3am','6am','9am','12pm','3pm','6pm','9pm'],
+				y: [t1, t2, t3, t4, t5, t6, t7, t8],
+				type: 'scatter' 
+			}];
+
+			var arrangement = {
+				xaxis: {
+					title: 'Time of Day',
+					showgrid: false,
+					zeroline: false
+				},
+				yaxis: {
+					title: 'Temperature in Fahrenheit',
+					showline: false
+				}
+			};
+			Plotly.newPlot(graph, data, arrangement);
+		</script>
+	</body>
+
+</html>	
